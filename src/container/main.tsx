@@ -1,41 +1,41 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 import { SET_DATA } from '../const';
-import { useContext } from "../context";
+import { useContext } from '../context';
+import Input from './input';
 
-const data = [{
+const data = [
+  {
     heading: 'Rehan is good',
     title: 'I am eeatomg food'
-},
-{
+  },
+  {
     heading: 'AI is the future',
     title: 'I love ai and machine'
-},
-]
+  }
+];
 
+const Index = () => {
+  const [state, dispatch] = useContext();
 
-const Index = ()=>{
+  useEffect(() => {
+    dispatch?.({type: SET_DATA, payload: data});
+  }, [dispatch]);
 
-    const [state, dispatch] = useContext()
+  console.log('state :', state);
 
-    useEffect(()=>{
-        dispatch?.({type:SET_DATA, payload: data })
-    },[dispatch])
+  return (
+    <React.Fragment>
+      <Input />
+      <ul>
+        {state.searchData?.map((item: any) => (
+          <li>
+            <h3 dangerouslySetInnerHTML={{__html: item.heading}} />
+            <h5>{item.title}</h5>
+          </li>
+        ))}
+      </ul>
+    </React.Fragment>
+  );
+};
 
-    console.log('state :',state)
-
-
-    return (
-        <React.Fragment>
-            <input placeholder="search here"/>
-            <ul>
-                <li>item 1</li>
-                <li>item 1</li>
-                <li>item 1</li>
-                <li>item 1</li>
-                <li>item 1</li>
-            </ul>
-        </React.Fragment>
-    )
-}
-
-export default Index
+export default Index;
