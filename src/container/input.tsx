@@ -1,20 +1,11 @@
 import { useEffect, useState } from 'react';
-import { SEARCH_DATA, START_LOADING } from '../const';
+import { END_LOADING, SEARCH_DATA, START_LOADING } from '../const';
 import { useContext } from '../context';
 import { useDebounce } from '../hooks';
+import { isMatch, replaceAll } from '../utils';
 
 const vals = ['heading', 'title'];
 
-const isMatch = (obj: any, char: any, toCheck = vals) => {
-  return toCheck.some((match: any) => obj[match].toLowerCase().includes(char));
-};
-
-const replaceAll = (obj:any, regex:RegExp, toCheck = vals,)=>{
-    const newObj = {...obj}
-     toCheck.forEach(key => newObj[key] = obj[key].replaceAll(regex, (match:any) => `<mark>${match}</mark>`))
-     return newObj;
-}
-    
 const Input = () => {
   const [input, setInput] = useState('');
   const [state, dispatch] = useContext();
@@ -22,10 +13,10 @@ const Input = () => {
 
   useEffect(() => {
     console.log(input);
-    searchValue();
+    searchValueCharacterMatching();
   }, [debouncedSearchTerm]);
 
-  const searchValue = () => {
+  const searchValueCharacterMatching = () => {
     const inputArr = input.toLowerCase().split('');
     const regex = new RegExp(inputArr.join('|'), 'gi');
 
@@ -33,13 +24,11 @@ const Input = () => {
 
     const newArr = state.data
       ?.filter(single =>
-        inputArr.every(inputChar =>
-            isMatch(single, inputChar)
-        )
+        inputArr.every(inputChar => isMatch(single, inputChar, vals))
       )
       .map(single => {
-       const newHeading = replaceAll(single, regex)
-        console.log('newHeading :',newHeading)
+        const newHeading = replaceAll(single, regex, vals);
+        console.log('newHeading :', newHeading);
 
         return {
           ...single,
@@ -48,6 +37,7 @@ const Input = () => {
       });
 
     dispatch?.({type: SEARCH_DATA, payload: newArr});
+    dispatch?.({type: END_LOADING});
   };
 
   return (

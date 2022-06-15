@@ -25,14 +25,18 @@ const Index = () => {
   return (
     <React.Fragment>
       <Input />
-      <ul>
-        {state.searchData?.map((item: any) => (
-          <li>
-            <h3 dangerouslySetInnerHTML={{__html: item.heading}} />
-            <h5 dangerouslySetInnerHTML={{__html: item.title}} />
-          </li>
-        ))}
-      </ul>
+      {state.isLoading ? (
+        <>Loading...</>
+      ) : (
+        <ul>
+          {state.searchData?.map((item: any) => (
+            <li>
+              <h3 dangerouslySetInnerHTML={{__html: item.heading}} />
+              <h5 dangerouslySetInnerHTML={{__html: item.title}} />
+            </li>
+          ))}
+        </ul>
+      )}
     </React.Fragment>
   );
 };
