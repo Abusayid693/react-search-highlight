@@ -9,9 +9,10 @@ const isMatch = (obj: any, char: any, toCheck = vals) => {
   return toCheck.some((match: any) => obj[match].toLowerCase().includes(char));
 };
 
-const replaceAll = (obj:any, toCheck = vals, regex:RegExp)=>{
-     toCheck.forEach(key => obj[key] = obj[key].replaceAll(regex, (match:any) => `<mark>${match}<mark>`))
-     return obj;
+const replaceAll = (obj:any, regex:RegExp, toCheck = vals,)=>{
+    const newObj = {...obj}
+     toCheck.forEach(key => newObj[key] = obj[key].replaceAll(regex, (match:any) => `<mark>${match}</mark>`))
+     return newObj;
 }
     
 const Input = () => {
@@ -37,19 +38,14 @@ const Input = () => {
         )
       )
       .map(single => {
-        const newHeading = single.heading.replaceAll(
-          regex,
-          (match: any) => `<mark>${match}</mark>`
-        );
-        
+       const newHeading = replaceAll(single, regex)
+        console.log('newHeading :',newHeading)
 
         return {
           ...single,
-          heading: newHeading
+          ...newHeading
         };
       });
-
-    console.log('newArr :', newArr);
 
     dispatch?.({type: SEARCH_DATA, payload: newArr});
   };

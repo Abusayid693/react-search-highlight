@@ -19,9 +19,8 @@ const Index = () => {
 
   useEffect(() => {
     dispatch?.({type: SET_DATA, payload: data});
+    console.warn('state :', state);
   }, [dispatch]);
-
-  console.log('state :', state);
 
   return (
     <React.Fragment>
