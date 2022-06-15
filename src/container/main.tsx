@@ -5,12 +5,12 @@ import Input from './input';
 
 const data = [
   {
-    heading: 'Rehan is good',
+    heading: 'Rhan is good',
     title: 'I am eeatomg food'
   },
   {
-    heading: 'AI is the future',
-    title: 'I love ai and machine'
+    heading: 'AI is th futur',
+    title: 'I lov ai and machin'
   }
 ];
 
@@ -30,7 +30,7 @@ const Index = () => {
         {state.searchData?.map((item: any) => (
           <li>
             <h3 dangerouslySetInnerHTML={{__html: item.heading}} />
-            <h5>{item.title}</h5>
+            <h5 dangerouslySetInnerHTML={{__html: item.title}} />
           </li>
         ))}
       </ul>
