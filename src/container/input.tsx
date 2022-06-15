@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { END_LOADING, SEARCH_DATA, START_LOADING } from '../const';
 import { useContext } from '../context';
-import { useThrottle } from '../hooks';
+import { useDidMountEffect, useThrottle } from '../hooks';
 import { isMatch, replaceAll } from '../utils';
 
 const vals = ['heading', 'title'];
@@ -10,8 +10,8 @@ const Input = () => {
   const [input, setInput] = useState('');
   const [state, dispatch] = useContext();
   const debouncedSearchTerm = useThrottle<string>(input, 1000);
-  
-  useEffect(() => {
+
+  useDidMountEffect(() => {
     console.log(input);
     searchValueCharacterMatching();
   }, [debouncedSearchTerm]);
@@ -21,6 +21,9 @@ const Input = () => {
     const regex = new RegExp(inputArr.join('|'), 'gi');
 
     dispatch?.({type: START_LOADING});
+
+    if (!Array.isArray(state.data))
+      throw new ReferenceError('Please provide data array');
 
     const newArr = state.data
       ?.filter(single =>

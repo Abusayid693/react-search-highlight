@@ -1,7 +1,7 @@
 import React, {
-    createContext, Dispatch, ReactNode,
-    Reducer, useContext as useReactContext, useMemo,
-    useReducer
+  createContext, Dispatch, ReactNode,
+  Reducer, useContext as useReactContext, useMemo,
+  useReducer
 } from 'react';
 
 import reducer, { Action, State } from '../reducers';
