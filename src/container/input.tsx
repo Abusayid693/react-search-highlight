@@ -1,17 +1,36 @@
 import { useState } from 'react';
-import { useDidMountEffect, useStringMatching, useThrottle } from '../hooks';
+import {
+  DEBOUNCE, STRING_MATCHING, THROTTLE
+} from '../const';
+import {
+  useCharacterMatching, useDebounce,
+  useDidMountEffect,
+  useStringMatching,
+  useThrottle
+} from '../hooks';
 
-const vals = ['heading', 'title'];
-
-const Input = () => {
+const Input: React.FC<{
+  keysToSearch: any[];
+  duration: number;
+  inputAlgo: string;
+  matchingAlogo: string;
+}> = ({keysToSearch, inputAlgo, matchingAlogo}) => {
   const [input, setInput] = useState('');
-  const debouncedSearchTerm = useThrottle<string>(input, 1000);
-  const searchValueCharacterMatching = useStringMatching(vals);
+
+  const searchTerm = () => {
+    if (inputAlgo === THROTTLE) return useThrottle<string>(input, 1000);
+    if (inputAlgo === DEBOUNCE) return useDebounce<string>(input, 1000);
+    return input;
+  };
+
+  const matchingFn =
+    matchingAlogo === STRING_MATCHING
+      ? useStringMatching(keysToSearch)
+      : useCharacterMatching(keysToSearch);
 
   useDidMountEffect(() => {
-    console.log(input);
-    searchValueCharacterMatching(input);
-  }, [debouncedSearchTerm]);
+    matchingFn(input);
+  }, [searchTerm]);
 
   return (
     <input

@@ -3,18 +3,13 @@ import { SET_DATA } from '../const';
 import { useContext } from '../context';
 import Input from './input';
 
-const data = [
-  {
-    heading: 'Rhan is good',
-    title: 'I am eeatomg food'
-  },
-  {
-    heading: 'AI is th futur',
-    title: 'I lov ai and machin'
-  }
-];
-
-const Index = () => {
+const Index: React.FC<{
+  keysToSearch: any[];
+  duration: number;
+  inputAlgo: string;
+  data: any[];
+  matchingAlogo: string;
+}> = ({keysToSearch, data, inputAlgo, duration, matchingAlogo}) => {
   const [state, dispatch] = useContext();
 
   useEffect(() => {
@@ -24,7 +19,12 @@ const Index = () => {
 
   return (
     <React.Fragment>
-      <Input />
+      <Input
+        keysToSearch={keysToSearch}
+        duration={duration}
+        inputAlgo={inputAlgo}
+        matchingAlogo={matchingAlogo}
+      />
       {state.isLoading ? (
         <>Loading...</>
       ) : (
