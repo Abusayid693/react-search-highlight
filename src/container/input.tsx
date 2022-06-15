@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { END_LOADING, SEARCH_DATA, START_LOADING } from '../const';
 import { useContext } from '../context';
-import { useDebounce } from '../hooks';
+import { useThrottle } from '../hooks';
 import { isMatch, replaceAll } from '../utils';
 
 const vals = ['heading', 'title'];
@@ -9,7 +9,7 @@ const vals = ['heading', 'title'];
 const Input = () => {
   const [input, setInput] = useState('');
   const [state, dispatch] = useContext();
-  const debouncedSearchTerm = useDebounce<string>(input, 500);
+  const debouncedSearchTerm = useThrottle<string>(input, 1000);
 
   useEffect(() => {
     console.log(input);
