@@ -1,14 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 
-export const useThrottle3 = <T>(value: T, ms: number = 200) => {};
-
-const useUnmount = (fn: () => any): void => {
-  const fnRef = useRef(fn);
-  fnRef.current = fn;
-
-  useEffect(() => () => fnRef.current(), []);
-};
-
 export const useThrottle = <T>(value: T, ms: number = 200) => {
   const [state, setState] = useState<T>(value);
   const timeout = useRef<ReturnType<typeof setTimeout>>();

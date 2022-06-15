@@ -10,7 +10,7 @@ const Input = () => {
   const [input, setInput] = useState('');
   const [state, dispatch] = useContext();
   const debouncedSearchTerm = useThrottle<string>(input, 1000);
-
+  
   useEffect(() => {
     console.log(input);
     searchValueCharacterMatching();
