@@ -29,7 +29,7 @@ const Index = () => {
         <>Loading...</>
       ) : (
         <ul>
-          {state.searchData?.map((item: any) => (
+          {state.searchData?.map((item: typeof data[0]) => (
             <li>
               <h3 dangerouslySetInnerHTML={{__html: item.heading}} />
               <h5 dangerouslySetInnerHTML={{__html: item.title}} />
