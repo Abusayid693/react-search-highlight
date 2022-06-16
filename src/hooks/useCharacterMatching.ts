@@ -14,11 +14,11 @@ export const useCharacterMatching = (vals: string[]) => {
       ?.filter((single: any) =>
         inputArr.every((inputChar: any) => isMatch(single, inputChar, vals))
       )
-      .map((single: any) => {
-        const newHeading = replaceAll(single, regex, vals);
+      .map((item: any) => {
+        const newItem = replaceAll(item, regex, vals);
         return {
-          ...single,
-          ...newHeading
+          ...item,
+          ...newItem
         };
       });
 

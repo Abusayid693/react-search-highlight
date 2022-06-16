@@ -4,7 +4,8 @@ import React, {
   useReducer
 } from 'react';
 
-import reducer, { Action, State } from '../reducers';
+import { Action, State } from 'types';
+import reducer from '../reducers';
 
 const initialState: State = {
   isLoading: false,
