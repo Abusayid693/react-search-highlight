@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   DEBOUNCE, STRING_MATCHING, THROTTLE
 } from '../const';
+// import * as styles from '../css.module.css';
+import { HStack } from '../flexBox';
 import {
   useCharacterMatching, useDebounce,
   useDidMountEffect,
   useStringMatching,
   useThrottle
 } from '../hooks';
+import searchIcon from "../icons/search.svg";
 
 const Input: React.FC<{
   keysToSearch: any[];
@@ -33,11 +36,16 @@ const Input: React.FC<{
   }, [searchTerm]);
 
   return (
+    <HStack justifyContent={'center'}>
+    <img src={searchIcon}/>
     <input
       value={input}
       onChange={e => setInput(e.target.value)}
       placeholder="search here"
+      onFocus={(e)=> e.preventDefault()}
+      // className={styles.input}
     />
+    </HStack>
   );
 };
 

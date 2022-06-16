@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import React, { HTMLAttributes } from "react";
 import { CHARACTER_MATCHING, DEBOUNCE, STRING_MATCHING, TEST_DATA, THROTTLE } from '../const';
 import { ContextProvider } from '../context';
 import Main from './main';
