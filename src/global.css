@@ -1,7 +1,7 @@
-.input:focus {
+.rsh-input:focus {
     outline: none;
 }
 
-.input{
+.rsh-input{
     background-color: red;
 }

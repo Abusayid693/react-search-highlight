@@ -1,4 +1,4 @@
-import { Action, State } from "types";
+import { Action, State } from "src/types";
 import { END_LOADING, SEARCH_DATA, SET_DATA, START_LOADING } from '../const';
 
 const reducer = (state: State, action: Action): State => {

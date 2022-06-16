@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   DEBOUNCE, STRING_MATCHING, THROTTLE
 } from '../const';
-// import * as styles from '../css.module.css';
 import { HStack } from '../flexBox';
 import {
   useCharacterMatching, useDebounce,
@@ -43,7 +42,7 @@ const Input: React.FC<{
       onChange={e => setInput(e.target.value)}
       placeholder="search here"
       onFocus={(e)=> e.preventDefault()}
-      // className={styles.input}
+      className={'rsh-input'}
     />
     </HStack>
   );

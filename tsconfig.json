@@ -1,6 +1,6 @@
 {
   // see https://www.typescriptlang.org/tsconfig to better understand tsconfigs
-  "include": ["src", "./*.ts", "./*.tsx","./*.js",  "./*.jsx" ,"types/custom.d.ts"],
+  "include": ["src", "./*.ts", "./*.tsx","./*.js",  "./*.jsx" ,"@types/custom.d.ts"],
   "compilerOptions": {
     
     "module": "esnext",

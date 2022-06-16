@@ -4,7 +4,7 @@ import React, {
   useReducer
 } from 'react';
 
-import { Action, State } from 'types';
+import { Action, State } from 'src/types';
 import reducer from '../reducers';
 
 const initialState: State = {
