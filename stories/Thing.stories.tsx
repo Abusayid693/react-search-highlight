@@ -7,18 +7,20 @@ const meta: Meta = {
   argTypes: {
     children: {
       control: {
-        type: 'text',
-      },
-    },
+        type: 'text'
+      }
+    }
   },
   parameters: {
-    controls: { expanded: true },
-  },
+    controls: {expanded: true}
+  }
 };
 
 export default meta;
 
-const Template: Story<Props> = (args) => <Main {...args} />;
+const Template: Story<Props> = args => (
+  <Main keysToSearch={['heading']} {...args} />
+);
 
 // By passing using the Args format for exported stories, you can control the props for a component for reuse in a test
 // https://storybook.js.org/docs/react/workflows/unit-testing
