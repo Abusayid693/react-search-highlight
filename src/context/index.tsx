@@ -13,10 +13,7 @@ const initialState: State = {
   searchData: undefined
 };
 
-export const context = createContext<[State, Dispatch<Action> | undefined]>([
-  initialState,
-  undefined
-]);
+export const context = createContext<[State, Dispatch<Action> | undefined]>(null as any);
 
 export const useContext = () => {
   return useReactContext(context);

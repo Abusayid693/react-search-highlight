@@ -1,15 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { SET_DATA } from '../const';
 import { useContext } from '../context';
+import {
+  useCharacterMatching,
+  useDebounce, useStringMatching,
+  useThrottle
+} from '../hooks';
 import Input from './input';
+
+const inputAlgorithms: Record<string, any> = {
+  DEBOUNCE: useDebounce<string>,
+  THROTTLE: useThrottle<string>,
+  DEFAULT: (e: any,) => e
+};
+
+const matchingAlgorithms: Record<string, any> = {
+  CHARACTER_MATCHING: useCharacterMatching,
+  STRING_MATCHING: useStringMatching
+};
 
 const Index: React.FC<{
   keysToSearch: any[];
   duration: number;
-  inputAlgo: string;
+  inputAlgorithm: string;
   data: any[];
-  matchingAlogo: string;
-}> = ({keysToSearch, data, inputAlgo, duration, matchingAlogo}) => {
+  matchingAlgorithm: string;
+}> = ({keysToSearch, data, inputAlgorithm, duration, matchingAlgorithm}) => {
   const [state, dispatch] = useContext();
 
   useEffect(() => {
@@ -17,20 +33,26 @@ const Index: React.FC<{
     console.warn('state :', state);
   }, [dispatch]);
 
-  return (
-    <React.Fragment>
+  const InputBox = useCallback(() => {
+    return (
       <Input
         keysToSearch={keysToSearch}
         duration={duration}
-        inputAlgo={inputAlgo}
-        matchingAlogo={matchingAlogo}
+        inputAlgorithm={inputAlgorithms[inputAlgorithm]}
+        matchingAlgorithm={matchingAlgorithms[matchingAlgorithm]}
       />
+    );
+  },[inputAlgorithm, matchingAlgorithm])
+
+  return (
+    <React.Fragment>
+      <InputBox/>
       {state.isLoading ? (
         <>Loading...</>
       ) : (
         <ul>
-          {state.searchData?.map((item: typeof data[0]) => (
-            <li>
+          {state.searchData?.map((item: typeof data[0], index) => (
+            <li key={item?.key ?? index}>
               <h3 dangerouslySetInnerHTML={{__html: item.heading}} />
               <h5 dangerouslySetInnerHTML={{__html: item.title}} />
             </li>

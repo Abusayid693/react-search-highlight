@@ -1,42 +1,45 @@
-import React, { HTMLAttributes } from "react";
-import { CHARACTER_MATCHING, DEBOUNCE, STRING_MATCHING, TEST_DATA, THROTTLE } from '../const';
+import React, { HTMLAttributes } from 'react';
+import {
+  CHARACTER_MATCHING,
+  DEBOUNCE,
+  DEFAULT,
+  STRING_MATCHING,
+  TEST_DATA,
+  THROTTLE
+} from '../const';
 import { ContextProvider } from '../context';
 import Main from './main';
 
 export interface Props extends HTMLAttributes<HTMLDivElement> {
   data: any[];
   keysToSearch?: string[];
-
-  withDebounce?: boolean;
-  withThrottle?: boolean;
-  duration?: number;
-
-  withStringMatching?: boolean;
-  withCharacterMatching?: boolean;
+  inputAlgorithm?: typeof DEBOUNCE | typeof THROTTLE | typeof DEFAULT;
+  inputAlgorithmTimeout?: number;
+  matchingAlgorithm?: typeof CHARACTER_MATCHING | typeof STRING_MATCHING;
 }
 
-const getInputAlgo = (condition1: boolean, condition2: boolean) => {
-  if (condition1) return DEBOUNCE;
-  if (condition2) return THROTTLE;
-  return 'DEFAULT';
-};
-
 const Index: React.FC<Props> = props => {
-  let {data, keysToSearch, withDebounce, withThrottle, duration, withStringMatching, withCharacterMatching} = props;
-  
+  let {
+    data,
+    keysToSearch,
+    inputAlgorithmTimeout,
+    inputAlgorithm = DEFAULT,
+    matchingAlgorithm
+  } = props;
+
   data = data ?? TEST_DATA;
   keysToSearch = keysToSearch ?? Object.keys(data?.[0]);
-  const inputAlgo = getInputAlgo(!!withDebounce, !!withThrottle);
-  const matchingAlogo = withStringMatching ? STRING_MATCHING : CHARACTER_MATCHING
-  duration = duration ?? 500;
+  inputAlgorithm = inputAlgorithm ?? DEBOUNCE;
+  inputAlgorithmTimeout = inputAlgorithmTimeout ?? 500;
+  matchingAlgorithm = matchingAlgorithm ?? CHARACTER_MATCHING;
 
   return (
     <ContextProvider>
       <Main
-        inputAlgo={inputAlgo}
-        matchingAlogo={matchingAlogo}
+        inputAlgorithm={inputAlgorithm}
+        matchingAlgorithm={matchingAlgorithm}
         keysToSearch={keysToSearch}
-        duration={duration}
+        duration={inputAlgorithmTimeout}
         data={data}
       />
     </ContextProvider>
