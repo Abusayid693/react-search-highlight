@@ -9,8 +9,8 @@ import {
 import Input from './input';
 
 const inputAlgorithms: Record<string, any> = {
-  DEBOUNCE: useDebounce<string>,
-  THROTTLE: useThrottle<string>,
+  DEBOUNCE: useDebounce,
+  THROTTLE: useThrottle,
   DEFAULT: (e: any,) => e
 };
 

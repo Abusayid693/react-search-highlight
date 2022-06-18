@@ -1,47 +1,47 @@
 .rsh-input:focus {
-    outline: none;
+  outline: none;
 }
 
-.rsh-input-box{
-    border: 1px solid grey;
-    border-radius: 5px;
-    position: relative;
+.rsh-input-box {
+  border: 1px solid transparent;
+  border-radius: 5px;
+  position: relative;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
-.rsh-input-box-logo{
-    width: 40px;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+.rsh-input-box-logo {
+  width: 40px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
-.rsh-input{
-    border: none;
-    width: 100%;
-    margin: 0;
-    height: 100%;
-    font-size: 15px;
-    padding: 0;
-    border-radius: inherit;
+.rsh-input {
+  border: none;
+  width: 100%;
+  margin: 0;
+  height: 100%;
+  font-size: 15px;
+  padding: 0;
+  border-radius: inherit;
 }
 
-.rsh-search-list{
-    background-color: red;
-    position: absolute;
-    top: 40px;
-    width: 100%;
-    padding: 0;
-    max-height: 40px;
-    overflow-x: scroll;
-    overflow: scroll;
+.rsh-search-list {
+  background-color: red;
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  padding: 0;
+  max-height: 40px;
+  overflow-x: scroll;
+  overflow: scroll;
 }
 
-.rsh-search-list-item{
-    background-color: yellow;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-
+.rsh-search-list-item {
+  background-color: yellow;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
