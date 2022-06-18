@@ -62,6 +62,9 @@ const Index: React.FC<{
     <section
       style={{width: '100vw'}}
       ref={listRef}
+      /**
+       * onFocusCapture is triggered when input(child) is focused
+       */
       onFocusCapture={() => setIsListVisible(true)}
     >
       <InputBox />

@@ -2,6 +2,10 @@ import { SEARCH_DATA } from '../const';
 import { useContext } from '../context';
 import { isMatch, replaceAll } from '../utils';
 
+/**
+ * @param vals - keys to search for from available data
+ * @returns {callback} - dispatches action to update search results after character strings
+ */
 export const useCharacterMatching = (vals: string[]) => {
   const [state, dispatch] = useContext();
   return (input: string) => {

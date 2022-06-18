@@ -33,6 +33,7 @@ const Input: React.FC<{
       padding={0}
       height={40}
       width={w}
+      cursor={'text'}
     >
       <figure className="rsh-input-box-logo">
         <img src={searchIcon} width="18px" />
