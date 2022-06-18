@@ -2,9 +2,16 @@ import React, { ReactNode } from 'react';
 
 interface HStackPropsType extends React.CSSProperties {
   children: ReactNode;
+  className?: string;
+  onClick?: () => void
 }
 
-export const HStack: React.FC<HStackPropsType> = ({children, ...args}) => {
+export const HStack: React.FC<HStackPropsType> = ({
+  children,
+  className,
+  onClick,
+  ...args
+}) => {
   return (
     <div
       style={{
@@ -13,13 +20,20 @@ export const HStack: React.FC<HStackPropsType> = ({children, ...args}) => {
         alignItems: 'center',
         ...args
       }}
+      className={className}
+      onClick={onClick}
     >
       {children}
     </div>
   );
 };
 
-export const VStack: React.FC<HStackPropsType> = ({children, ...args}) => {
+export const VStack: React.FC<HStackPropsType> = ({
+  children,
+  className,
+  onClick,
+  ...args
+}) => {
   return (
     <div
       style={{
@@ -28,6 +42,8 @@ export const VStack: React.FC<HStackPropsType> = ({children, ...args}) => {
         alignItems: 'center',
         ...args
       }}
+      className={className}
+      onClick={onClick}
     >
       {children}
     </div>
