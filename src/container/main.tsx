@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { SET_DATA } from '../const';
 import { useContext } from '../context';
 import {
   useCharacterMatching,
-  useDebounce, useStringMatching,
+  useDebounce, useOffScreen, useStringMatching,
   useThrottle
 } from '../hooks';
 import Input from './input';
@@ -28,6 +28,9 @@ const Index: React.FC<{
 }> = ({keysToSearch, data, inputAlgorithm, duration, matchingAlgorithm}) => {
   const [state, dispatch] = useContext();
 
+  const listRef = useRef<HTMLUListElement>(null)
+  const [isListVisible, setIsListVisible] = useOffScreen(listRef)
+
   useEffect(() => {
     dispatch?.({type: SET_DATA, payload: data});
     console.warn('state :', state);
@@ -40,26 +43,23 @@ const Index: React.FC<{
         duration={duration}
         inputAlgorithm={inputAlgorithms[inputAlgorithm]}
         matchingAlgorithm={matchingAlgorithms[matchingAlgorithm]}
+        w={'400px'}
       />
     );
   },[inputAlgorithm, matchingAlgorithm])
 
   return (
-    <React.Fragment>
+    <section style={{width: '100vw'}} ref={listRef} onFocusCapture={()=> setIsListVisible(true)}>
       <InputBox/>
-      {state.isLoading ? (
-        <>Loading...</>
-      ) : (
-        <ul>
+       {isListVisible && <ul className='rsh-search-list'  style={{width:'400px'}}>
           {state.searchData?.map((item: typeof data[0], index) => (
-            <li key={item?.key ?? index}>
+            <li className='rsh-search-list-item' key={item?.key ?? index}>
               <h3 dangerouslySetInnerHTML={{__html: item.heading}} />
               <h5 dangerouslySetInnerHTML={{__html: item.title}} />
             </li>
           ))}
-        </ul>
-      )}
-    </React.Fragment>
+        </ul>}
+    </section>
   );
 };
 

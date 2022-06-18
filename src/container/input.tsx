@@ -8,7 +8,8 @@ const Input: React.FC<{
   duration: number;
   inputAlgorithm: any;
   matchingAlgorithm: any;
-}> = ({keysToSearch, inputAlgorithm, matchingAlgorithm}) => {
+  w: string;
+}> = ({keysToSearch, inputAlgorithm, matchingAlgorithm, w}) => {
   const [input, setInput] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -22,9 +23,16 @@ const Input: React.FC<{
   const focusInput = () => inputRef?.current?.focus();
 
   return (
-    <HStack onClick={focusInput} justifyContent={'center'} className="rsh-input-box" padding={0} height={40}>
+    <HStack
+      onClick={focusInput}
+      justifyContent={'center'}
+      className="rsh-input-box"
+      padding={0}
+      height={40}
+      width={w}
+    >
       <figure className="rsh-input-box-logo">
-        <img src={searchIcon} width='18px' />
+        <img src={searchIcon} width="18px" />
       </figure>
       <input
         value={input}

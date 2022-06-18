@@ -4,12 +4,14 @@ interface HStackPropsType extends React.CSSProperties {
   children: ReactNode;
   className?: string;
   onClick?: () => void
+  onMouseDown?: any
 }
 
 export const HStack: React.FC<HStackPropsType> = ({
   children,
   className,
   onClick,
+  onMouseDown,
   ...args
 }) => {
   return (
@@ -32,6 +34,7 @@ export const VStack: React.FC<HStackPropsType> = ({
   children,
   className,
   onClick,
+  onMouseDown,
   ...args
 }) => {
   return (
