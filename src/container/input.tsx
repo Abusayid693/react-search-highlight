@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { HStack } from '../flexBox';
-import { useDidMountEffect } from '../hooks';
+import { Stack } from '../flexBox';
+import { useDidMountEffect, useKeyDown } from '../hooks';
 import searchIcon from '../icons/search.svg';
 
 const Input: React.FC<{
@@ -9,7 +9,7 @@ const Input: React.FC<{
   inputAlgorithm: any;
   matchingAlgorithm: any;
   w: string;
-}> = ({keysToSearch, inputAlgorithm, matchingAlgorithm, w}) => {
+}> = ({keysToSearch, inputAlgorithm, matchingAlgorithm, w,  ...any}) => {
   const [input, setInput] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -22,8 +22,11 @@ const Input: React.FC<{
 
   const focusInput = () => inputRef?.current?.focus();
 
+  useKeyDown(focusInput)
+
   return (
-    <HStack
+    <Stack
+      as='HStack'
       onClick={focusInput}
       justifyContent={'center'}
       className="rsh-input-box"
@@ -42,8 +45,9 @@ const Input: React.FC<{
         className={'rsh-input'}
         autoFocus
         ref={inputRef}
+        {...any}
       />
-    </HStack>
+    </Stack>
   );
 };
 

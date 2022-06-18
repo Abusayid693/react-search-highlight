@@ -10,7 +10,7 @@ import {
 import { ContextProvider } from '../context';
 import Main from './main';
 
-export interface Props extends HTMLAttributes<HTMLDivElement> {
+export interface Props extends HTMLAttributes<HTMLInputElement> {
   data: any[];
   keysToSearch?: string[];
   inputAlgorithm?: typeof DEBOUNCE | typeof THROTTLE | typeof DEFAULT;
@@ -24,7 +24,8 @@ const Index: React.FC<Props> = props => {
     keysToSearch,
     inputAlgorithmTimeout,
     inputAlgorithm = DEFAULT,
-    matchingAlgorithm
+    matchingAlgorithm,
+    ...any
   } = props;
 
   data = data ?? TEST_DATA;
@@ -41,6 +42,7 @@ const Index: React.FC<Props> = props => {
         keysToSearch={keysToSearch}
         duration={inputAlgorithmTimeout}
         data={data}
+        {...any}
       />
     </ContextProvider>
   );
