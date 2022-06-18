@@ -3,7 +3,9 @@ import { SET_DATA } from '../const';
 import { useContext } from '../context';
 import {
   useCharacterMatching,
-  useDebounce, useOffScreen, useStringMatching,
+  useDebounce,
+  useOffScreen,
+  useStringMatching,
   useThrottle
 } from '../hooks';
 import Input from './input';
@@ -11,7 +13,7 @@ import Input from './input';
 const inputAlgorithms: Record<string, any> = {
   DEBOUNCE: useDebounce,
   THROTTLE: useThrottle,
-  DEFAULT: (e: any,) => e
+  DEFAULT: (e: any) => e
 };
 
 const matchingAlgorithms: Record<string, any> = {
@@ -25,11 +27,18 @@ const Index: React.FC<{
   inputAlgorithm: string;
   data: any[];
   matchingAlgorithm: string;
-}> = ({keysToSearch, data, inputAlgorithm, duration, matchingAlgorithm}) => {
+}> = ({
+  keysToSearch,
+  data,
+  inputAlgorithm,
+  duration,
+  matchingAlgorithm,
+  ...any
+}) => {
   const [state, dispatch] = useContext();
 
-  const listRef = useRef<HTMLUListElement>(null)
-  const [isListVisible, setIsListVisible] = useOffScreen(listRef)
+  const listRef = useRef<HTMLUListElement>(null);
+  const [isListVisible, setIsListVisible] = useOffScreen(listRef);
 
   useEffect(() => {
     dispatch?.({type: SET_DATA, payload: data});
@@ -44,21 +53,28 @@ const Index: React.FC<{
         inputAlgorithm={inputAlgorithms[inputAlgorithm]}
         matchingAlgorithm={matchingAlgorithms[matchingAlgorithm]}
         w={'400px'}
+        {...any}
       />
     );
-  },[inputAlgorithm, matchingAlgorithm])
+  }, [inputAlgorithm, matchingAlgorithm]);
 
   return (
-    <section style={{width: '100vw'}} ref={listRef} onFocusCapture={()=> setIsListVisible(true)}>
-      <InputBox/>
-       {isListVisible && <ul className='rsh-search-list'  style={{width:'400px'}}>
+    <section
+      style={{width: '100vw'}}
+      ref={listRef}
+      onFocusCapture={() => setIsListVisible(true)}
+    >
+      <InputBox />
+      {isListVisible && (
+        <ul className="rsh-search-list" style={{width: '400px'}}>
           {state.searchData?.map((item: typeof data[0], index) => (
-            <li className='rsh-search-list-item' key={item?.key ?? index}>
+            <li className="rsh-search-list-item" key={item?.key ?? index}>
               <h3 dangerouslySetInnerHTML={{__html: item.heading}} />
               <h5 dangerouslySetInnerHTML={{__html: item.title}} />
             </li>
           ))}
-        </ul>}
+        </ul>
+      )}
     </section>
   );
 };

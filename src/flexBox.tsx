@@ -1,52 +1,34 @@
 import React, { ReactNode } from 'react';
 
 interface HStackPropsType extends React.CSSProperties {
+  as?: 'VStack' | 'HStack';
   children: ReactNode;
   className?: string;
-  onClick?: () => void
-  onMouseDown?: any
+  onClick?: VoidFunction;
+  onMouseDown?: VoidFunction;
+  onFocusCapture?: VoidFunction
 }
 
-export const HStack: React.FC<HStackPropsType> = ({
+export const Stack: React.FC<HStackPropsType> = ({
+  as,
   children,
   className,
   onClick,
   onMouseDown,
+  onFocusCapture,
   ...args
 }) => {
   return (
     <div
       style={{
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: as === 'HStack' ? 'row' : 'column',
         alignItems: 'center',
         ...args
       }}
       className={className}
       onClick={onClick}
-    >
-      {children}
-    </div>
-  );
-};
-
-export const VStack: React.FC<HStackPropsType> = ({
-  children,
-  className,
-  onClick,
-  onMouseDown,
-  ...args
-}) => {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        ...args
-      }}
-      className={className}
-      onClick={onClick}
+      onFocusCapture={onFocusCapture}
     >
       {children}
     </div>

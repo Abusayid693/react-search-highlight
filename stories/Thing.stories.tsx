@@ -19,7 +19,7 @@ const meta: Meta = {
 export default meta;
 
 const Template: Story<Props> = args => (
-  <Main keysToSearch={['heading']} {...args} />
+  <Main keysToSearch={['heading']} placeholder="search docs" {...args} />
 );
 
 // By passing using the Args format for exported stories, you can control the props for a component for reuse in a test
