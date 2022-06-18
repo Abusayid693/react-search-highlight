@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Stack } from '../flexBox';
-import { useDidMountEffect } from '../hooks';
+import { useDidMountEffect, useKeyDown } from '../hooks';
 import searchIcon from '../icons/search.svg';
 
 const Input: React.FC<{
@@ -21,6 +21,8 @@ const Input: React.FC<{
   }, [searchTerm]);
 
   const focusInput = () => inputRef?.current?.focus();
+
+  useKeyDown(focusInput)
 
   return (
     <Stack
