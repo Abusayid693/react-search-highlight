@@ -34,7 +34,7 @@
   top: 40px;
   width: 100%;
   padding: 0;
-  max-height: 40px;
+  /* max-height: 40px; */
   overflow-x: scroll;
   overflow: scroll;
 }

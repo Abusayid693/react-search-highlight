@@ -1,3 +1,5 @@
+import process from "process";
+
 export const SET_DATA = 'SET_DATA';
 export const START_LOADING = 'START_LOADING';
 export const END_LOADING = 'END_LOADING';
@@ -20,3 +22,5 @@ export const TEST_DATA =  [
       title: 'I lov ai and machin'
     }
   ];
+
+export const __DEV__: boolean = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';

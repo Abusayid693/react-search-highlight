@@ -16,6 +16,8 @@ const Input: React.FC<{
   const searchTerm = inputAlgorithm(input, 1000);
   const matchingFn = matchingAlgorithm(keysToSearch);
 
+  console.log(keysToSearch)
+
   useDidMountEffect(() => {
     matchingFn(input);
   }, [searchTerm]);
@@ -33,6 +35,7 @@ const Input: React.FC<{
       padding={0}
       height={40}
       width={w}
+      cursor={'text'}
     >
       <figure className="rsh-input-box-logo">
         <img src={searchIcon} width="18px" />

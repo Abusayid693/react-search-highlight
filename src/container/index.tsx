@@ -3,9 +3,8 @@ import {
   CHARACTER_MATCHING,
   DEBOUNCE,
   DEFAULT,
-  STRING_MATCHING,
-  TEST_DATA,
-  THROTTLE
+  STRING_MATCHING, THROTTLE,
+  __DEV__
 } from '../const';
 import { ContextProvider } from '../context';
 import Main from './main';
@@ -28,11 +27,12 @@ const Index: React.FC<Props> = props => {
     ...any
   } = props;
 
-  data = data ?? TEST_DATA;
   keysToSearch = keysToSearch ?? Object.keys(data?.[0]);
   inputAlgorithm = inputAlgorithm ?? DEBOUNCE;
   inputAlgorithmTimeout = inputAlgorithmTimeout ?? 500;
   matchingAlgorithm = matchingAlgorithm ?? CHARACTER_MATCHING;
+
+  console.log(__DEV__)
 
   return (
     <ContextProvider>

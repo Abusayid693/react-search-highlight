@@ -1,19 +1,40 @@
-import { SEARCH_DATA } from '../const';
+import { SEARCH_DATA, __DEV__ } from '../const';
 import { useContext } from '../context';
 import { isMatch, replaceAll } from '../utils';
 
+/**
+ * @param vals - keys to search for from available data
+ * @returns {callback} - dispatches action to update search results after matching strings
+ */
 export const useStringMatching = (vals: string[]) => {
   const [state, dispatch] = useContext();
   return (input: string) => {
-
     const regex = new RegExp(input, 'gi');
-    if (!Array.isArray(state.data))
-      throw new ReferenceError('Please provide data array');
-
+    if (!Array.isArray(state.data) || !Array.isArray(vals)) {
+      if (__DEV__) {
+        console.error(
+          `Element type is invalid: expected a array but got: ${typeof state.data}.` +
+            ' This could happen for one of the following reasons:\n' +
+            '\t1. You might have passed wrong data types in data props\n' +
+            '\t2. You might have passed wrong data types in keysToSearch props\n'
+        );
+      }
+      return;
+    }
+    if (
+      state.data.length > 0 &&
+      !Object.keys(state.data[0]).some(key => vals.includes(key))
+    ) {
+      if (__DEV__) {
+        console.error(
+          'Keys are invalid: cannot perform matching operation. ' +
+            'keysToSearch must contain atleast one key for which data object has valid value'
+        );
+      }
+      return;
+    }
     const newArr = state.data
-      ?.filter((single: any) =>
-       isMatch(single, input, vals)
-      )
+      ?.filter((single: any) => isMatch(single, input, vals))
       .map((item: any) => {
         const newItem = replaceAll(item, regex, vals);
         return {
