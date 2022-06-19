@@ -16,6 +16,8 @@ const Input: React.FC<{
   const searchTerm = inputAlgorithm(input, 1000);
   const matchingFn = matchingAlgorithm(keysToSearch);
 
+  console.log(keysToSearch)
+
   useDidMountEffect(() => {
     matchingFn(input);
   }, [searchTerm]);
