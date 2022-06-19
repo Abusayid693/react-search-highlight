@@ -13,3 +13,4 @@ export const replaceAll = (obj: any, regex: RegExp, keys: string[]) => {
   );
   return newObj;
 };
+

@@ -1,34 +1,39 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { SET_INPUT } from '../const';
+import { useContext } from '../context';
 import { Stack } from '../flexBox';
-import { useDidMountEffect, useKeyDown } from '../hooks';
+import { useCharacterMatching, useKeyDown, useStringMatching } from '../hooks';
 import searchIcon from '../icons/search.svg';
 
 const Input: React.FC<{
   keysToSearch: any[];
   duration: number;
   inputAlgorithm: any;
-  matchingAlgorithm: any;
+  matchingAlgorithm: typeof useCharacterMatching | typeof useStringMatching;
   w: string;
-}> = ({keysToSearch, inputAlgorithm, matchingAlgorithm, w,  ...any}) => {
+  data: any[];
+}> = ({keysToSearch, inputAlgorithm, matchingAlgorithm, w, data, ...any}) => {
   const [input, setInput] = useState('');
+  const {dispatch} = useContext();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const searchTerm = inputAlgorithm(input, 1000);
+  const searchTerm = inputAlgorithm(input, 500);
   const matchingFn = matchingAlgorithm(keysToSearch);
 
-  console.log(keysToSearch)
+  console.log(keysToSearch);
 
-  useDidMountEffect(() => {
-    matchingFn(input);
-  }, [searchTerm]);
+  useEffect(() => {
+    if (data) matchingFn(input, data);
+    dispatch?.({type: SET_INPUT, payload: input});
+  }, [searchTerm, data]);
 
   const focusInput = () => inputRef?.current?.focus();
 
-  useKeyDown(focusInput)
+  useKeyDown(focusInput);
 
   return (
     <Stack
-      as='HStack'
+      as="HStack"
       onClick={focusInput}
       justifyContent={'center'}
       className="rsh-input-box"

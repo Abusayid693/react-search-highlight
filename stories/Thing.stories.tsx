@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/react';
-import Main, { Props } from '../src';
+import Main, { ContextProvider, Props, useContext } from '../src';
 
 const meta: Meta = {
   title: 'Welcome',
@@ -16,7 +16,7 @@ const meta: Meta = {
   }
 };
 
- const TEST_DATA =  [
+const TEST_DATA = [
   {
     heading: 'Rhan is good',
     title: 'I am eeatomg food'
@@ -27,15 +27,29 @@ const meta: Meta = {
   }
 ];
 
-
 export default meta;
 
-const Template: Story<Props> = args => (
-  <Main data={TEST_DATA} keysToSearch={['heading']} placeholder="search docs" />
-);
+const Template = args => {
+  const {state} = useContext();
+  console.log(state)
+
+  return (
+    <Main
+      data={TEST_DATA}
+      keysToSearch={['heading']}
+      placeholder="search docs"
+    />
+  );
+};
 
 // By passing using the Args format for exported stories, you can control the props for a component for reuse in a test
 // https://storybook.js.org/docs/react/workflows/unit-testing
-export const Default = Template.bind({});
+export const Default: Story<Props> = args => {
+  return (
+    <ContextProvider>
+      <Template />
+    </ContextProvider>
+  );
+};
 
 Default.args = {};
