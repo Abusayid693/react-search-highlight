@@ -1,16 +1,16 @@
-import { END_LOADING, SEARCH_DATA, SET_DATA, START_LOADING } from '../src/const';
+import { END_LOADING, SEARCH_DATA, SET_INPUT, START_LOADING } from '../src/const';
 
 export type Action = {
   type:
-    | typeof SET_DATA
+    | typeof SET_INPUT
     | typeof START_LOADING
     | typeof END_LOADING
     | typeof SEARCH_DATA;
-  payload?: any[];
+  payload?: any;
 };
 
 export interface State {
   isLoading: boolean;
-  data: any[] | undefined;
   searchData: any[] | undefined;
+  input: string
 }

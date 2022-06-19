@@ -9,8 +9,8 @@ import reducer from '../reducers';
 
 const initialState: State = {
   isLoading: false,
-  data: undefined,
-  searchData: undefined
+  searchData: undefined,
+  input:''
 };
 
 export const context = createContext<[State, Dispatch<Action> | undefined]>(null as any);
@@ -31,8 +31,6 @@ export const ContextProvider: React.FC<{children: ReactNode}> = ({
     () => [state, dispatch],
     [state]
   );
-
-  console.log('dispatch : ', value)
 
   return <context.Provider value={value}>{children}</context.Provider>;
 };

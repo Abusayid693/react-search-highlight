@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
-import { SET_DATA } from '../const';
+import React, { useRef } from 'react';
 import { useContext } from '../context';
 import {
   useCharacterMatching,
@@ -35,28 +34,10 @@ const Index: React.FC<{
   matchingAlgorithm,
   ...any
 }) => {
-  const [state, dispatch] = useContext();
+  const [state] = useContext();
 
   const listRef = useRef<HTMLUListElement>(null);
   const [isListVisible, setIsListVisible] = useOffScreen(listRef);
-
-  useEffect(() => {
-    dispatch?.({type: SET_DATA, payload: data});
-    console.warn('state :', state);
-  }, [dispatch]);
-
-  const InputBox = useCallback(() => {
-    return (
-      <Input
-        keysToSearch={keysToSearch}
-        duration={duration}
-        inputAlgorithm={inputAlgorithms[inputAlgorithm]}
-        matchingAlgorithm={matchingAlgorithms[matchingAlgorithm]}
-        w={'400px'}
-        {...any}
-      />
-    );
-  }, [inputAlgorithm, matchingAlgorithm]);
 
   return (
     <section
@@ -67,7 +48,15 @@ const Index: React.FC<{
        */
       onFocusCapture={() => setIsListVisible(true)}
     >
-      <InputBox />
+      <Input
+        keysToSearch={keysToSearch}
+        duration={duration}
+        inputAlgorithm={inputAlgorithms[inputAlgorithm]}
+        matchingAlgorithm={matchingAlgorithms[matchingAlgorithm]}
+        w={'400px'}
+        data={data}
+        {...any}
+      />
       {isListVisible && (
         <ul className="rsh-search-list" style={{width: '400px'}}>
           {state.searchData?.map((item: typeof data[0], index) => (

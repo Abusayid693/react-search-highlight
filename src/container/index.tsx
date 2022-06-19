@@ -3,10 +3,8 @@ import {
   CHARACTER_MATCHING,
   DEBOUNCE,
   DEFAULT,
-  STRING_MATCHING, THROTTLE,
-  __DEV__
+  STRING_MATCHING, THROTTLE
 } from '../const';
-import { ContextProvider } from '../context';
 import Main from './main';
 
 export interface Props extends HTMLAttributes<HTMLInputElement> {
@@ -22,7 +20,7 @@ const Index: React.FC<Props> = props => {
     data,
     keysToSearch,
     inputAlgorithmTimeout,
-    inputAlgorithm = DEFAULT,
+    inputAlgorithm = DEBOUNCE,
     matchingAlgorithm,
     ...any
   } = props;
@@ -32,10 +30,7 @@ const Index: React.FC<Props> = props => {
   inputAlgorithmTimeout = inputAlgorithmTimeout ?? 500;
   matchingAlgorithm = matchingAlgorithm ?? CHARACTER_MATCHING;
 
-  console.log(__DEV__)
-
   return (
-    <ContextProvider>
       <Main
         inputAlgorithm={inputAlgorithm}
         matchingAlgorithm={matchingAlgorithm}
@@ -44,7 +39,6 @@ const Index: React.FC<Props> = props => {
         data={data}
         {...any}
       />
-    </ContextProvider>
   );
 };
 
