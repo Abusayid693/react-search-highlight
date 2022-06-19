@@ -1,3 +1,4 @@
+import { Dispatch } from "react";
 import { END_LOADING, SEARCH_DATA, SET_INPUT, START_LOADING } from '../src/const';
 
 export type Action = {
@@ -14,3 +15,11 @@ export interface State {
   searchData: any[] | undefined;
   input: string
 }
+
+
+export type ContextType = {
+  state: State;
+  dispatch: Dispatch<Action> | undefined;
+  startLoading: VoidFunction;
+  endLoading: VoidFunction;
+};

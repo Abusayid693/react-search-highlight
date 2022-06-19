@@ -30,7 +30,8 @@ const TEST_DATA = [
 export default meta;
 
 const Template = args => {
-  const [state] = useContext();
+  const {state} = useContext();
+  console.log(state)
 
   return (
     <Main

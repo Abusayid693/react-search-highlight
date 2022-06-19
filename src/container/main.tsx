@@ -34,7 +34,7 @@ const Index: React.FC<{
   matchingAlgorithm,
   ...any
 }) => {
-  const [state] = useContext();
+  const {state} = useContext();
 
   const listRef = useRef<HTMLUListElement>(null);
   const [isListVisible, setIsListVisible] = useOffScreen(listRef);

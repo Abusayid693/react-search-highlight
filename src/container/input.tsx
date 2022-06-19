@@ -14,7 +14,7 @@ const Input: React.FC<{
   data: any[];
 }> = ({keysToSearch, inputAlgorithm, matchingAlgorithm, w, data, ...any}) => {
   const [input, setInput] = useState('');
-  const [, dispatch] = useContext();
+  const {dispatch} = useContext();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const searchTerm = inputAlgorithm(input, 500);
