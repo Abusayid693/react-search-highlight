@@ -1,9 +1,9 @@
 import { Meta, Story } from '@storybook/react';
-import Main, { ContextProvider, Props, useContext } from '../src';
+import { ContextProvider, PopOverList, Props, SearchBar, useContext, Wrapper } from '../src';
 
 const meta: Meta = {
   title: 'Welcome',
-  component: Main,
+  component: SearchBar,
   argTypes: {
     children: {
       control: {
@@ -31,14 +31,17 @@ export default meta;
 
 const Template = args => {
   const {state} = useContext();
-  console.log(state)
+  console.log('Template :',state)
 
   return (
-    <Main
+    <Wrapper>
+    <SearchBar
       data={TEST_DATA}
       keysToSearch={['heading']}
       placeholder="search docs"
     />
+    <PopOverList/>
+    </Wrapper>
   );
 };
 

@@ -1,43 +1,22 @@
-import React, { useRef } from 'react';
+import React, { ReactNode, useRef } from 'react';
+import { POPOVER_EXPANDED } from '../const';
 import { useContext } from '../context';
-import {
-  useCharacterMatching,
-  useDebounce,
-  useOffScreen,
-  useStringMatching,
-  useThrottle
-} from '../hooks';
-import Input from './input';
+import { useDidMountEffect, useOffScreen } from '../hooks';
 
-const inputAlgorithms: Record<string, any> = {
-  DEBOUNCE: useDebounce,
-  THROTTLE: useThrottle,
-  DEFAULT: (e: any) => e
-};
-
-const matchingAlgorithms: Record<string, any> = {
-  CHARACTER_MATCHING: useCharacterMatching,
-  STRING_MATCHING: useStringMatching
-};
-
-const Index: React.FC<{
-  keysToSearch: any[];
-  duration: number;
-  inputAlgorithm: string;
-  data: any[];
-  matchingAlgorithm: string;
-}> = ({
-  keysToSearch,
-  data,
-  inputAlgorithm,
-  duration,
-  matchingAlgorithm,
-  ...any
-}) => {
-  const {state} = useContext();
+export const Wrapper: React.FC<{
+  children: ReactNode;
+}> = ({children}) => {
+  const {dispatch} = useContext();
 
   const listRef = useRef<HTMLUListElement>(null);
   const [isListVisible, setIsListVisible] = useOffScreen(listRef);
+
+  useDidMountEffect(
+    () => {
+      dispatch?.({type: POPOVER_EXPANDED, payload: isListVisible})
+    },
+    [isListVisible]
+  );
 
   return (
     <section
@@ -48,18 +27,19 @@ const Index: React.FC<{
        */
       onFocusCapture={() => setIsListVisible(true)}
     >
-      <Input
-        keysToSearch={keysToSearch}
-        duration={duration}
-        inputAlgorithm={inputAlgorithms[inputAlgorithm]}
-        matchingAlgorithm={matchingAlgorithms[matchingAlgorithm]}
-        w={'400px'}
-        data={data}
-        {...any}
-      />
-      {isListVisible && (
+      {children}
+    </section>
+  );
+};
+
+export const PopOverList = () => {
+  const {state,} = useContext();
+
+  return (
+    <>
+      {state.isPopoverExpanded && (
         <ul className="rsh-search-list" style={{width: '400px'}}>
-          {state.searchData?.map((item: typeof data[0], index) => (
+          {state.searchData?.map((item: any, index) => (
             <li className="rsh-search-list-item" key={item?.key ?? index}>
               <h3 dangerouslySetInnerHTML={{__html: item.heading}} />
               <h5 dangerouslySetInnerHTML={{__html: item.title}} />
@@ -67,8 +47,6 @@ const Index: React.FC<{
           ))}
         </ul>
       )}
-    </section>
+    </>
   );
 };
-
-export default Index;

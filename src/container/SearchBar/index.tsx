@@ -3,9 +3,27 @@ import {
   CHARACTER_MATCHING,
   DEBOUNCE,
   DEFAULT,
-  STRING_MATCHING, THROTTLE
-} from '../const';
-import Main from './main';
+  STRING_MATCHING,
+  THROTTLE
+} from '../../const';
+
+import {
+  useCharacterMatching,
+  useDebounce, useStringMatching,
+  useThrottle
+} from '../../hooks';
+import Input from './input';
+
+const inputAlgorithms: Record<string, any> = {
+  DEBOUNCE: useDebounce,
+  THROTTLE: useThrottle,
+  DEFAULT: (e: any) => e
+};
+
+const matchingAlgorithms: Record<string, any> = {
+  CHARACTER_MATCHING: useCharacterMatching,
+  STRING_MATCHING: useStringMatching
+};
 
 export interface Props extends HTMLAttributes<HTMLInputElement> {
   data: any[];
@@ -15,7 +33,7 @@ export interface Props extends HTMLAttributes<HTMLInputElement> {
   matchingAlgorithm?: typeof CHARACTER_MATCHING | typeof STRING_MATCHING;
 }
 
-const Index: React.FC<Props> = props => {
+export const SearchBar: React.FC<Props> = props => {
   let {
     data,
     keysToSearch,
@@ -31,15 +49,13 @@ const Index: React.FC<Props> = props => {
   matchingAlgorithm = matchingAlgorithm ?? CHARACTER_MATCHING;
 
   return (
-      <Main
-        inputAlgorithm={inputAlgorithm}
-        matchingAlgorithm={matchingAlgorithm}
-        keysToSearch={keysToSearch}
-        duration={inputAlgorithmTimeout}
-        data={data}
-        {...any}
-      />
+    <Input
+      keysToSearch={keysToSearch}
+      duration={inputAlgorithmTimeout}
+      inputAlgorithm={inputAlgorithms[inputAlgorithm]}
+      matchingAlgorithm={matchingAlgorithms[matchingAlgorithm]}
+      data={data}
+      {...any}
+    />
   );
 };
-
-export default Index;

@@ -1,6 +1,4 @@
-import Index from "./container";
 import "./global.css";
-export * from "./container";
+export * from "./container/main";
+export * from "./container/SearchBar";
 export * from "./context";
-
-export default Index

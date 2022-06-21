@@ -1,18 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { SET_INPUT } from '../const';
-import { useContext } from '../context';
-import { Stack } from '../flexBox';
-import { useCharacterMatching, useKeyDown, useStringMatching } from '../hooks';
-import searchIcon from '../icons/search.svg';
+import { SET_INPUT } from '../../const';
+import { useContext } from '../../context';
+import { Stack } from '../../flexBox';
+import { useCharacterMatching, useKeyDown, useStringMatching } from '../../hooks';
+import searchIcon from '../../icons/search.svg';
 
 const Input: React.FC<{
   keysToSearch: any[];
   duration: number;
   inputAlgorithm: any;
   matchingAlgorithm: typeof useCharacterMatching | typeof useStringMatching;
-  w: string;
   data: any[];
-}> = ({keysToSearch, inputAlgorithm, matchingAlgorithm, w, data, ...any}) => {
+}> = ({keysToSearch, inputAlgorithm, matchingAlgorithm, data, ...any}) => {
   const [input, setInput] = useState('');
   const {dispatch} = useContext();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -39,7 +38,7 @@ const Input: React.FC<{
       className="rsh-input-box"
       padding={0}
       height={40}
-      width={w}
+      width={'400px'}
       cursor={'text'}
     >
       <figure className="rsh-input-box-logo">
