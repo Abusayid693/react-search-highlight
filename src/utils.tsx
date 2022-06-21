@@ -8,7 +8,7 @@ export const replaceAll = (obj: any, regex: RegExp, keys: string[]) => {
     key =>
       (newObj[key] = obj[key].replaceAll(
         regex,
-        (match: any) => `<mark>${match}</mark>`
+        (match: any) => `(<mark>${match}</mark>)`
       ))
   );
   return newObj;

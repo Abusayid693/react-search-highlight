@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react';
+import React from 'react';
 import {
   CHARACTER_MATCHING,
   DEBOUNCE,
@@ -25,12 +25,15 @@ const matchingAlgorithms: Record<string, any> = {
   STRING_MATCHING: useStringMatching
 };
 
-export interface Props extends HTMLAttributes<HTMLInputElement> {
+export interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   data: any[];
   keysToSearch?: string[];
   inputAlgorithm?: typeof DEBOUNCE | typeof THROTTLE | typeof DEFAULT;
   inputAlgorithmTimeout?: number;
   matchingAlgorithm?: typeof CHARACTER_MATCHING | typeof STRING_MATCHING;
+  value?: string;
+  onChange?: (e:React.ChangeEvent<HTMLInputElement>) => void
+  initialValue?: string
 }
 
 export const SearchBar: React.FC<Props> = props => {
@@ -40,6 +43,8 @@ export const SearchBar: React.FC<Props> = props => {
     inputAlgorithmTimeout,
     inputAlgorithm = DEBOUNCE,
     matchingAlgorithm,
+    onChange,
+    initialValue,
     ...any
   } = props;
 
@@ -55,6 +60,8 @@ export const SearchBar: React.FC<Props> = props => {
       inputAlgorithm={inputAlgorithms[inputAlgorithm]}
       matchingAlgorithm={matchingAlgorithms[matchingAlgorithm]}
       data={data}
+      onChange={onChange}
+      initialValue={initialValue}
       {...any}
     />
   );
