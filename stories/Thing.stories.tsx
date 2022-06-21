@@ -1,9 +1,16 @@
 import { Meta, Story } from '@storybook/react';
-import Main, { ContextProvider, Props, useContext } from '../src';
+import { useState } from 'react';
+import {
+  ContextProvider,
+  PopOverList, PopOverOption, PopOverOptionText, Props,
+  SearchBar,
+  useContext,
+  Wrapper
+} from '../src';
 
 const meta: Meta = {
   title: 'Welcome',
-  component: Main,
+  component: SearchBar,
   argTypes: {
     children: {
       control: {
@@ -23,22 +30,38 @@ const TEST_DATA = [
   },
   {
     heading: 'AI is th futur',
-    title: 'I lov ai and machin'
+    title: 'I lov ai and machin',
+    name: 'Rehan'
   }
 ];
 
 export default meta;
 
+
 const Template = args => {
+  const [input, setInput] = useState('')
   const {state} = useContext();
-  console.log(state)
+  console.log('Template :', input);
 
   return (
-    <Main
-      data={TEST_DATA}
-      keysToSearch={['heading']}
-      placeholder="search docs"
-    />
+    <>
+    <Wrapper> 
+      <SearchBar
+        data={TEST_DATA}
+        keysToSearch={['heading', 'title']}
+        placeholder="search docs"
+      />
+      <PopOverList>
+        {state.searchData?.map((item, index) => (
+          <PopOverOption key={index} onClick={() => alert(index)}>
+            ⚡️
+            <PopOverOptionText as='h3' value={item.heading}/>
+            <PopOverOptionText as='h5' value={item.title}/>
+          </PopOverOption>
+        ))}
+      </PopOverList>
+    </Wrapper>
+    </>
   );
 };
 

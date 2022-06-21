@@ -10,7 +10,7 @@ export const THROTTLE = 'THROTTLE'
 export const STRING_MATCHING = 'STRING_MATCHING';
 export const CHARACTER_MATCHING = 'CHARACTER_MATCHING';
 export const DEFAULT = 'DEFAULT'
-
+export const POPOVER_EXPANDED = 'POPOVER_EXPANDED'
 
 export const TEST_DATA =  [
     {

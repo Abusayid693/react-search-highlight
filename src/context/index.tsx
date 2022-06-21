@@ -13,7 +13,8 @@ import { Action, ContextType, State } from '../types';
 const initialState: State = {
   isLoading: false,
   searchData: undefined,
-  input: ''
+  input: '',
+  isPopoverExpanded: false
 };
 
 
