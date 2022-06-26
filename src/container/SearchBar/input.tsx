@@ -28,7 +28,9 @@ const Input: React.FC<{
   const {dispatch} = useContext();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const searchTerm = inputAlgorithm(input, 500);
+  const searchInput = controlledValue ?? input;
+
+  const searchTerm = inputAlgorithm(searchInput, 500);
   const matchingFn = matchingAlgorithm(keysToSearch);
 
   if (__DEV__) {
@@ -43,20 +45,15 @@ const Input: React.FC<{
   }
 
   useEffect(() => {
-    if (data) matchingFn(input, data);
-    dispatch?.({type: SET_INPUT, payload: input});
+    if (data) matchingFn(searchInput, data);
+    dispatch?.({type: SET_INPUT, payload: searchInput});
   }, [searchTerm, data]);
-
-  useEffect(() => {
-    if (typeof controlledValue !== 'undefined') setInput(controlledValue);
-  }, [controlledValue]);
 
   const focusInput = () => inputRef?.current?.focus();
 
   useKeyDown(focusInput);
 
   const handleOnChange = (e: any) => setInput(e.target.value);
-
   return (
     <Stack
       as="HStack"

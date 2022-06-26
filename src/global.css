@@ -2,10 +2,13 @@
   outline: none;
 }
 
+.rsh-search-wrapper{
+  position: relative;
+}
+
 .rsh-input-box {
   border: 1px solid transparent;
   border-radius: 5px;
-  position: relative;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
@@ -29,7 +32,7 @@
 }
 
 .rsh-search-list {
-  background-color: red;
+  /* background-color: red; */
   position: absolute;
   top: 40px;
   width: 100%;
@@ -37,11 +40,26 @@
   /* max-height: 40px; */
   overflow-x: scroll;
   overflow: scroll;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  z-index: 12;
+  padding: 0 8px;
+  box-sizing: border-box;
+
 }
 
 .rsh-search-list-item {
-  background-color: rgb(122, 43, 206);
   list-style: none;
   margin: 0;
   padding: 0;
+  margin: 10px 0;
+  border-radius: 13px;
+  padding: 3px 8px;
+}
+
+.rsh-search-list-item__active{
+  background-color: rgba(120, 120, 120, 0.05);
+}
+
+.rsh-search-list-item-text{
+  margin: 0px;
 }
