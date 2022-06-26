@@ -51,7 +51,7 @@ const Input: React.FC<{
 
   const focusInput = () => inputRef?.current?.focus();
 
-  useKeyDown(focusInput);
+  useKeyDown(focusInput, true);
 
   const handleOnChange = (e: any) => setInput(e.target.value);
   return (
