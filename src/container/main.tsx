@@ -1,10 +1,6 @@
-import React, {
-  createContext,
-  ReactNode, useEffect,
-  useRef,
-  useState
-} from 'react';
-import { useDidMountEffect, useOffScreen } from '../hooks';
+import React, { createContext, ReactNode, useRef, useState } from 'react';
+import { __DEV__ } from '../const';
+import { useDidMountEffect, useKeyDown, useOffScreen } from '../hooks';
 import Text from '../Text';
 
 /**
@@ -15,14 +11,12 @@ import Text from '../Text';
 interface InternalContextInitialStateType {
   isPopoverExpanded: boolean;
   listItemActiveIndex: number;
-  listItemRef: React.RefObject<HTMLLIElement> | null;
   updateInternalContext: any;
 }
 
 const InternalContextInitialState: InternalContextInitialStateType = {
   isPopoverExpanded: false,
   listItemActiveIndex: 0,
-  listItemRef: null,
   updateInternalContext: (key: string, value: any) => {}
 };
 
@@ -68,13 +62,26 @@ export interface PopOverListProps
 
 export const PopOverList: React.FC<PopOverListProps> = ({children, ...any}) => {
   const listRef = useRef<HTMLUListElement>(null);
-  const {isPopoverExpanded, listItemRef} = React.useContext(InternalContext);
+  const {
+    isPopoverExpanded,
+    listItemActiveIndex,
+    updateInternalContext
+  } = React.useContext(InternalContext);
 
-  useEffect(() => {
-    listItemRef?.current?.classList.add('rsh-search-list-item__active');
-    return () => 
-      listItemRef?.current?.classList.remove('rsh-search-list-item__active');
-  }, [listItemRef]);
+  const listItemActiveIndexArrowDown = () => {
+    updateInternalContext('listItemActiveIndex', listItemActiveIndex + 1);
+  };
+
+  const listItemActiveIndexArrowUp = () => {
+    updateInternalContext('listItemActiveIndex', listItemActiveIndex - 1);
+  };
+
+  useKeyDown(listItemActiveIndexArrowDown, false, 'arrowdown', [
+    listItemActiveIndex
+  ]);
+  useKeyDown(listItemActiveIndexArrowUp, false, 'arrowup', [
+    listItemActiveIndex
+  ]);
 
   return (
     <>
@@ -95,24 +102,36 @@ export const PopOverList: React.FC<PopOverListProps> = ({children, ...any}) => {
 export interface PopOverOptionProps
   extends React.LiHTMLAttributes<HTMLLIElement> {
   children: ReactNode;
+  optionIndex: number;
 }
 
 export const PopOverOption: React.FC<PopOverOptionProps> = ({
   children,
+  optionIndex,
   ...any
 }) => {
-  const listItemRef = useRef<HTMLLIElement>(null);
-  const {updateInternalContext} = React.useContext(InternalContext);
+  const {updateInternalContext, listItemActiveIndex} = React.useContext(
+    InternalContext
+  );
+
+  if (__DEV__ && typeof optionIndex !== 'number')
+    throw new ReferenceError(
+      `optionIndex type is invalid: expected a number but got: ${typeof optionIndex}. ` +
+        `To avoid the error please provide optionIndex in PopOverOption component` +
+        `\n\t{state.searchData?.map((item, index) => (` +
+        `\n\t\t\t<PopOverOption` +
+        `\n\t\t\t\toptionIndex={index}`
+    );
 
   const handleMouserEnter = () => {
-    updateInternalContext('listItemRef', listItemRef);
+    updateInternalContext('listItemActiveIndex', optionIndex);
   };
 
   return (
     <li
-      ref={listItemRef}
       onMouseEnter={handleMouserEnter}
-      className="rsh-search-list-item"
+      className={`rsh-search-list-item ${listItemActiveIndex === optionIndex &&
+        'rsh-search-list-item__active'}`}
       {...any}
     >
       {children}

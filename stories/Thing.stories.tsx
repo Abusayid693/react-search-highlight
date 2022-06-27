@@ -2,7 +2,10 @@ import { Meta, Story } from '@storybook/react';
 import { useState } from 'react';
 import {
   ContextProvider,
-  PopOverList, PopOverOption, PopOverOptionText, Props,
+  PopOverList,
+  PopOverOption,
+  PopOverOptionText,
+  Props,
   SearchBar,
   useContext,
   Wrapper
@@ -37,30 +40,33 @@ const TEST_DATA = [
 
 export default meta;
 
-
 const Template = args => {
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState('');
   const {state} = useContext();
   console.log('Template :', input);
 
   return (
     <>
-    <Wrapper> 
-      <SearchBar
-        data={TEST_DATA}
-        keysToSearch={['heading', 'title']}
-        placeholder="search docs"
-      />
-      <PopOverList>
-        {state.searchData?.map((item, index) => (
-          <PopOverOption key={index} onClick={() => alert(index)}>
-            ⚡️
-            <PopOverOptionText as='h3' value={item.heading}/>
-            <PopOverOptionText as='h5' value={item.title}/>
-          </PopOverOption>
-        ))}
-      </PopOverList>
-    </Wrapper>
+      <Wrapper>
+        <SearchBar
+          data={TEST_DATA}
+          keysToSearch={['heading', 'title']}
+          placeholder="search docs"
+        />
+        <PopOverList>
+          {state.searchData?.map((item, index) => (
+            <PopOverOption
+              optionIndex={index}
+              key={index}
+              onClick={() => alert(index)}
+            >
+              ⚡️
+              <PopOverOptionText as="h3" value={item.heading} />
+              <PopOverOptionText as="h5" value={item.title} />
+            </PopOverOption>
+          ))}
+        </PopOverList>
+      </Wrapper>
     </>
   );
 };
