@@ -45,7 +45,6 @@ export const Wrapper: React.FC<{
   return (
     <InternalContext.Provider value={{...state, updateInternalContext}}>
       <section
-        style={{width: '100vw'}}
         ref={listRef}
         className="rsh-search-wrapper"
         /**
@@ -97,7 +96,6 @@ export const PopOverList: React.FC<PopOverListProps> = ({children, ...any}) => {
         <ul
           ref={listRef}
           className="rsh-search-list"
-          style={{width: '400px'}}
           {...any}
         >
           {children}

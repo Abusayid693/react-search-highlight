@@ -7,16 +7,22 @@ import { isMatch, replaceAll } from '../utils';
  * @returns {callback} - dispatches action to update search results after character strings
  */
 export const useCharacterMatching = (keys: string[]) => {
-  const { dispatch } = useContext();
+  const {dispatch} = useContext();
   return (input: string, data: any[]) => {
     const inputArr = input.toLowerCase().split('');
+
+    if (inputArr.length === 0) {
+      dispatch?.({type: SEARCH_DATA, payload: []});
+      return;
+    }
+
     const regex = new RegExp(inputArr.join('|'), 'gi');
 
     if (!Array.isArray(data) || !Array.isArray(keys)) {
       if (__DEV__) {
         console.error(
           `Element type is invalid: expected a array but got: ${typeof data}.` +
-          'This could happen because you have passed wrong data type in data props'
+            'This could happen because you have passed wrong data type in data props'
         );
       }
       return;
@@ -28,9 +34,9 @@ export const useCharacterMatching = (keys: string[]) => {
       if (__DEV__) {
         console.error(
           'Keys are invalid: cannot perform matching operation. \n' +
-          'This could happen for one of the following reasons:\n' +
-          '\t1. keysToSearch does not contain any key for which data object has valid value' + 
-          '\t2. You might have passed wrong data types in keysToSearch props\n'
+            'This could happen for one of the following reasons:\n' +
+            '\t1. keysToSearch does not contain any key for which data object has valid value' +
+            '\t2. You might have passed wrong data types in keysToSearch props\n'
         );
       }
       return;
@@ -47,6 +53,6 @@ export const useCharacterMatching = (keys: string[]) => {
         };
       });
 
-    dispatch?.({ type: SEARCH_DATA, payload: newArr });
+    dispatch?.({type: SEARCH_DATA, payload: newArr});
   };
 };

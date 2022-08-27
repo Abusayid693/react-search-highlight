@@ -9,6 +9,11 @@ import { isMatch, replaceAll } from '../utils';
 export const useStringMatching = (keys: string[]) => {
   const {dispatch} = useContext();
   return (input: string, data: any[]) => {
+    if (input.length === 0) {
+      dispatch?.({type: SEARCH_DATA, payload: []});
+      return;
+    }
+
     const regex = new RegExp(input, 'gi');
 
     if (!Array.isArray(data) || !Array.isArray(keys)) {

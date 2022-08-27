@@ -71,7 +71,7 @@ const Input: React.FC<{
       className="rsh-input-box"
       padding={0}
       height={40}
-      width={'400px'}
+      // width={'400px'}
       cursor={'text'}
     >
       <figure className="rsh-input-box-logo">
