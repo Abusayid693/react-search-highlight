@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/react';
-import { useState } from 'react';
+import React from 'react';
 import {
   ContextProvider,
   PopOverList,
@@ -41,9 +41,7 @@ const TEST_DATA = [
 export default meta;
 
 const Template = args => {
-  const [input, setInput] = useState('');
   const {state} = useContext();
-  console.log('Template :', input);
 
   return (
     <>

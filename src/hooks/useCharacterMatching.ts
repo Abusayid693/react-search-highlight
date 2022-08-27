@@ -16,9 +16,7 @@ export const useCharacterMatching = (keys: string[]) => {
       if (__DEV__) {
         console.error(
           `Element type is invalid: expected a array but got: ${typeof data}.` +
-          ' This could happen for one of the following reasons:\n' +
-          '\t1. You might have passed wrong data types in data props\n' +
-          '\t2. You might have passed wrong data types in keysToSearch props\n'
+          'This could happen because you have passed wrong data type in data props'
         );
       }
       return;
@@ -29,8 +27,10 @@ export const useCharacterMatching = (keys: string[]) => {
     ) {
       if (__DEV__) {
         console.error(
-          'Keys are invalid: cannot perform matching operation. ' +
-          'keysToSearch must contain atleast one key for which data object has valid value'
+          'Keys are invalid: cannot perform matching operation. \n' +
+          'This could happen for one of the following reasons:\n' +
+          '\t1. keysToSearch does not contain any key for which data object has valid value' + 
+          '\t2. You might have passed wrong data types in keysToSearch props\n'
         );
       }
       return;

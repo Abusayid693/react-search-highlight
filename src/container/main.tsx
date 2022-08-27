@@ -12,15 +12,19 @@ interface InternalContextInitialStateType {
   isPopoverExpanded: boolean;
   listItemActiveIndex: number;
   updateInternalContext: any;
+
+  // need for popover list active index keydown
+  dataLength: number;
 }
 
 const InternalContextInitialState: InternalContextInitialStateType = {
   isPopoverExpanded: false,
   listItemActiveIndex: 0,
-  updateInternalContext: (key: string, value: any) => {}
+  updateInternalContext: (key: string, value: any) => {},
+  dataLength: 0
 };
 
-const InternalContext = createContext(InternalContextInitialState);
+export const InternalContext = createContext(InternalContextInitialState);
 
 export const Wrapper: React.FC<{
   children: ReactNode;
@@ -65,19 +69,23 @@ export const PopOverList: React.FC<PopOverListProps> = ({children, ...any}) => {
   const {
     isPopoverExpanded,
     listItemActiveIndex,
-    updateInternalContext
+    updateInternalContext,
+    dataLength
   } = React.useContext(InternalContext);
 
   const listItemActiveIndexArrowDown = () => {
-    updateInternalContext('listItemActiveIndex', listItemActiveIndex + 1);
+    if (listItemActiveIndex < dataLength - 1)
+      updateInternalContext('listItemActiveIndex', listItemActiveIndex + 1);
   };
 
   const listItemActiveIndexArrowUp = () => {
-    updateInternalContext('listItemActiveIndex', listItemActiveIndex - 1);
+    if (listItemActiveIndex > 0)
+      updateInternalContext('listItemActiveIndex', listItemActiveIndex - 1);
   };
 
   useKeyDown(listItemActiveIndexArrowDown, false, 'arrowdown', [
-    listItemActiveIndex
+    listItemActiveIndex,
+    dataLength
   ]);
   useKeyDown(listItemActiveIndexArrowUp, false, 'arrowup', [
     listItemActiveIndex
