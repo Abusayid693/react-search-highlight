@@ -14,7 +14,6 @@ const initialState: State = {
   isLoading: false,
   searchData: undefined,
   input: '',
-  isPopoverExpanded: false
 };
 
 

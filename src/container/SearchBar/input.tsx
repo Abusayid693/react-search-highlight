@@ -5,6 +5,8 @@ import { Stack } from '../../flexBox';
 import { useCharacterMatching, useKeyDown, useStringMatching } from '../../hooks';
 import searchIcon from '../../icons/search.svg';
 
+import { InternalContext } from '../main';
+
 const Input: React.FC<{
   keysToSearch: any[];
   duration: number;
@@ -26,6 +28,8 @@ const Input: React.FC<{
 }) => {
   const [input, setInput] = useState(initialValue ?? '');
   const {dispatch} = useContext();
+  const __internalContext = React.useContext(InternalContext);
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const searchInput = controlledValue ?? input;
@@ -49,6 +53,11 @@ const Input: React.FC<{
     dispatch?.({type: SET_INPUT, payload: searchInput});
   }, [searchTerm, data]);
 
+  useEffect(() => {
+    if (__internalContext)
+      __internalContext.updateInternalContext('dataLength', data.length);
+  }, [data]);
+
   const focusInput = () => inputRef?.current?.focus();
 
   useKeyDown(focusInput, true);
@@ -62,7 +71,7 @@ const Input: React.FC<{
       className="rsh-input-box"
       padding={0}
       height={40}
-      width={'400px'}
+      // width={'400px'}
       cursor={'text'}
     >
       <figure className="rsh-input-box-logo">

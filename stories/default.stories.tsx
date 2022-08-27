@@ -1,7 +1,8 @@
 import { Meta, Story } from '@storybook/react';
-import { useState } from 'react';
+import React from 'react';
 import {
   ContextProvider,
+  Modal,
   PopOverList,
   PopOverOption,
   PopOverOptionText,
@@ -41,33 +42,29 @@ const TEST_DATA = [
 export default meta;
 
 const Template = args => {
-  const [input, setInput] = useState('');
   const {state} = useContext();
-  console.log('Template :', input);
 
   return (
-    <>
-      <Wrapper>
-        <SearchBar
-          data={TEST_DATA}
-          keysToSearch={['heading', 'title']}
-          placeholder="search docs"
-        />
-        <PopOverList>
-          {state.searchData?.map((item, index) => (
-            <PopOverOption
-              optionIndex={index}
-              key={index}
-              onClick={() => alert(index)}
-            >
-              ⚡️
-              <PopOverOptionText as="h3" value={item.heading} />
-              <PopOverOptionText as="h5" value={item.title} />
-            </PopOverOption>
-          ))}
-        </PopOverList>
-      </Wrapper>
-    </>
+    <Wrapper>
+      <SearchBar
+        data={TEST_DATA}
+        keysToSearch={['heading', 'title']}
+        placeholder="search docs"
+      />
+      <PopOverList>
+        {state.searchData?.map((item, index) => (
+          <PopOverOption
+            optionIndex={index}
+            key={index}
+            onClick={() => alert(index)}
+          >
+            ⚡️
+            <PopOverOptionText as="h3" value={item.heading} />
+            <PopOverOptionText as="h5" value={item.title} />
+          </PopOverOption>
+        ))}
+      </PopOverList>
+    </Wrapper>
   );
 };
 
@@ -77,6 +74,17 @@ export const Default: Story<Props> = args => {
   return (
     <ContextProvider>
       <Template />
+    </ContextProvider>
+  );
+};
+
+export const WithModal: Story<Props> = args => {
+  return (
+    <ContextProvider>
+      <h1>Modal is open</h1>
+      <Modal>
+        <Template />
+      </Modal>
     </ContextProvider>
   );
 };
