@@ -46,7 +46,7 @@
   box-sizing: border-box;
   background-color: #FFFF;
   min-width: 200px;
-
+  max-height: 500px;
 }
 
 .rsh-search-list-item {
