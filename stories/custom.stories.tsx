@@ -1,5 +1,6 @@
 import { Meta, Story } from '@storybook/react';
 import React from 'react';
+import TEST_DATA from "../data.json";
 import {
     PopOverList,
     PopOverOption,
@@ -23,17 +24,7 @@ const meta: Meta = {
   }
 };
 
-const TEST_DATA = [
-  {
-    heading: 'Rhan is good',
-    title: 'I am eeatomg food'
-  },
-  {
-    heading: 'AI is th futur',
-    title: 'I lov ai and machin',
-    name: 'Rehan'
-  }
-];
+
 
 export default meta;
 

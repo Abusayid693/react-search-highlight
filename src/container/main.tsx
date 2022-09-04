@@ -42,7 +42,7 @@ const WrapperInner = ({children, isFunction}: WrapperProps) => {
   const [state, setState] = useState(InternalContextInitialState);
   const __state = useReactSearchHighlight();
 
-  const updateInternalContext = (key: string, value: any) => {
+  const updateInternalContext = (key: keyof InternalContextInitialStateType, value: any) => {
     setState(prev => ({...prev, [key]: value}));
   };
 
