@@ -5,8 +5,9 @@ import {
   PopOverList,
   PopOverOption,
   PopOverOptionText,
-  Props, ReactSearchHighlightProvider, SearchBar,
-  useReactSearchHighlight,
+  Props,
+  SearchBar,
+  // useReactSearchHighlight,
   Wrapper
 } from '../src';
 
@@ -39,51 +40,46 @@ const TEST_DATA = [
 
 export default meta;
 
-const Template = args => {
-  const {state} = useReactSearchHighlight();
-
+export const Default = args => {
   return (
     <Wrapper>
-      <SearchBar
-        data={TEST_DATA}
-        keysToSearch={['heading', 'title']}
-        placeholder="search docs"
-      />
-      <PopOverList>
-        {state.searchData?.map((item, index) => (
-          <PopOverOption
-            optionIndex={index}
-            key={index}
-            onClick={() => alert(index)}
-          >
-            ⚡️
-            <PopOverOptionText as="h3" value={item.heading} />
-            <PopOverOptionText as="h5" value={item.title} />
-          </PopOverOption>
-        ))}
-      </PopOverList>
+      {({state}) => {
+        return (
+          <>
+            <SearchBar
+              data={TEST_DATA}
+              keysToSearch={['heading', 'title']}
+              placeholder="search docs"
+            />
+            <PopOverList>
+              {state.searchData?.map((item, index) => (
+                <PopOverOption
+                  optionIndex={index}
+                  key={index}
+                  onClick={() => alert(index)}
+                >
+                  ⚡️
+                  <PopOverOptionText as="h3" value={item.heading} />
+                  <PopOverOptionText as="h5" value={item.title} />
+                </PopOverOption>
+              ))}
+            </PopOverList>
+          </>
+        );
+      }}
     </Wrapper>
   );
 };
 
-// By passing using the Args format for exported stories, you can control the props for a component for reuse in a test
-// https://storybook.js.org/docs/react/workflows/unit-testing
-export const Default: Story<Props> = args => {
-  return (
-    <ReactSearchHighlightProvider>
-      <Template />
-    </ReactSearchHighlightProvider>
-  );
-};
 
 export const WithModal: Story<Props> = args => {
   return (
-    <ReactSearchHighlightProvider>
+    <div>
       <h1>Modal is open</h1>
       <Modal>
-        <Template />
+        <Default />
       </Modal>
-    </ReactSearchHighlightProvider>
+    </div>
   );
 };
 
