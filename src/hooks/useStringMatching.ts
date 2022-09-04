@@ -1,5 +1,5 @@
 import { SEARCH_DATA, __DEV__ } from '../const';
-import { useContext } from '../context';
+import { useReactSearchHighlight } from '../context';
 import { isMatch, replaceAll } from '../utils';
 
 /**
@@ -7,7 +7,7 @@ import { isMatch, replaceAll } from '../utils';
  * @returns {callback} - dispatches action to update search results after matching strings
  */
 export const useStringMatching = (keys: string[]) => {
-  const {dispatch} = useContext();
+  const {dispatch} = useReactSearchHighlight();
   return (input: string, data: any[]) => {
     if (input.length === 0) {
       dispatch?.({type: SEARCH_DATA, payload: []});

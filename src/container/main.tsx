@@ -1,7 +1,12 @@
 import React, { createContext, ReactNode, useRef, useState } from 'react';
 import { __DEV__ } from '../const';
+import {
+  ReactSearchHighlightProvider,
+  useReactSearchHighlight
+} from '../context';
 import { useDidMountEffect, useKeyDown, useOffScreen } from '../hooks';
 import Text from '../Text';
+import { ContextType } from '../types';
 
 /**
  * InternalContext manages internal states between the components
@@ -26,12 +31,18 @@ const InternalContextInitialState: InternalContextInitialStateType = {
 
 export const InternalContext = createContext(InternalContextInitialState);
 
-export const Wrapper: React.FC<{
-  children: ReactNode;
-}> = ({children}) => {
-  const [state, setState] = useState(InternalContextInitialState);
+type D = (values: ContextType) => JSX.Element;
 
-  const updateInternalContext = (key: string, value: any) => {
+interface WrapperProps {
+  children: D | any;
+  isFunction: boolean;
+}
+
+const WrapperInner = ({children, isFunction}: WrapperProps) => {
+  const [state, setState] = useState(InternalContextInitialState);
+  const __state = useReactSearchHighlight();
+
+  const updateInternalContext = (key: keyof InternalContextInitialStateType, value: any) => {
     setState(prev => ({...prev, [key]: value}));
   };
 
@@ -52,9 +63,25 @@ export const Wrapper: React.FC<{
          */
         onFocusCapture={() => setIsListVisible(true)}
       >
-        {children}
+        {isFunction ? children(__state) : children}
       </section>
     </InternalContext.Provider>
+  );
+};
+
+export const Wrapper = ({children}: Pick<WrapperProps, 'children'>) => {
+  const isFunction = typeof children === 'function';
+
+  return (
+    <>
+      {isFunction ? (
+        <ReactSearchHighlightProvider>
+          <WrapperInner isFunction={isFunction} children={children} />
+        </ReactSearchHighlightProvider>
+      ) : (
+        <WrapperInner isFunction={isFunction} children={children} />
+      )}
+    </>
   );
 };
 
@@ -93,11 +120,7 @@ export const PopOverList: React.FC<PopOverListProps> = ({children, ...any}) => {
   return (
     <>
       {isPopoverExpanded && (
-        <ul
-          ref={listRef}
-          className="rsh-search-list"
-          {...any}
-        >
+        <ul ref={listRef} className="rsh-search-list" {...any}>
           {children}
         </ul>
       )}

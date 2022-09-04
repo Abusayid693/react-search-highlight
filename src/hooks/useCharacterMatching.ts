@@ -1,5 +1,5 @@
 import { SEARCH_DATA, __DEV__ } from '../const';
-import { useContext } from '../context';
+import { useReactSearchHighlight } from '../context';
 import { isMatch, replaceAll } from '../utils';
 
 /**
@@ -7,7 +7,7 @@ import { isMatch, replaceAll } from '../utils';
  * @returns {callback} - dispatches action to update search results after character strings
  */
 export const useCharacterMatching = (keys: string[]) => {
-  const {dispatch} = useContext();
+  const {dispatch} = useReactSearchHighlight();
   return (input: string, data: any[]) => {
     const inputArr = input.toLowerCase().split('');
 
