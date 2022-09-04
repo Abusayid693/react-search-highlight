@@ -6,24 +6,26 @@ import React, {
   useReducer
 } from 'react';
 
-import { END_LOADING, START_LOADING } from '../const';
+import { END_LOADING, RESET_STATE, START_LOADING } from '../const';
 import reducer from '../reducers';
 import { Action, ContextType, State } from '../types';
 
-const initialState: State = {
+export const initialState: State = {
   isLoading: false,
   searchData: undefined,
   input: '',
 };
 
-
 export const context = createContext<ContextType>(null as any);
 
-export const useContext = () => {
+/**
+ * @returns context data and helper function
+ */
+export const useReactSearchHighlight = () => {
   return useReactContext(context);
 };
 
-export const ContextProvider: React.FC<{children: ReactNode}> = ({
+export const ReactSearchHighlightProvider: React.FC<{children: ReactNode}> = ({
   children
 }) => {
   const [state, dispatch] = useReducer<Reducer<State, Action>>(
@@ -39,12 +41,17 @@ export const ContextProvider: React.FC<{children: ReactNode}> = ({
     dispatch({type: END_LOADING});
   };
 
+  const resetState = () =>{
+    dispatch({type: RESET_STATE});
+  }
+
   const value: ContextType = useMemo(
     () => ({
       state,
       dispatch,
       startLoading,
-      endLoading
+      endLoading,
+      resetState
     }),
     [state]
   );

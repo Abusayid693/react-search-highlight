@@ -1,14 +1,12 @@
 import { Meta, Story } from '@storybook/react';
 import React from 'react';
 import {
-  ContextProvider,
   Modal,
   PopOverList,
   PopOverOption,
   PopOverOptionText,
-  Props,
-  SearchBar,
-  useContext,
+  Props, ReactSearchHighlightProvider, SearchBar,
+  useReactSearchHighlight,
   Wrapper
 } from '../src';
 
@@ -42,7 +40,7 @@ const TEST_DATA = [
 export default meta;
 
 const Template = args => {
-  const {state} = useContext();
+  const {state} = useReactSearchHighlight();
 
   return (
     <Wrapper>
@@ -72,20 +70,20 @@ const Template = args => {
 // https://storybook.js.org/docs/react/workflows/unit-testing
 export const Default: Story<Props> = args => {
   return (
-    <ContextProvider>
+    <ReactSearchHighlightProvider>
       <Template />
-    </ContextProvider>
+    </ReactSearchHighlightProvider>
   );
 };
 
 export const WithModal: Story<Props> = args => {
   return (
-    <ContextProvider>
+    <ReactSearchHighlightProvider>
       <h1>Modal is open</h1>
       <Modal>
         <Template />
       </Modal>
-    </ContextProvider>
+    </ReactSearchHighlightProvider>
   );
 };
 

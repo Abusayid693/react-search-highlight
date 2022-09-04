@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { SET_INPUT, __DEV__ } from '../../const';
-import { useContext } from '../../context';
+import { useReactSearchHighlight } from '../../context';
 import { Stack } from '../../flexBox';
 import { useCharacterMatching, useKeyDown, useStringMatching } from '../../hooks';
 import searchIcon from '../../icons/search.svg';
@@ -27,7 +27,7 @@ const Input: React.FC<{
   ...any
 }) => {
   const [input, setInput] = useState(initialValue ?? '');
-  const {dispatch} = useContext();
+  const {dispatch} = useReactSearchHighlight();
   const __internalContext = React.useContext(InternalContext);
 
   const inputRef = useRef<HTMLInputElement>(null);
