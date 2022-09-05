@@ -34,6 +34,7 @@ export interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   value?: string;
   onChange?: (e:React.ChangeEvent<HTMLInputElement>) => void
   initialValue?: string
+  PrefixIcon: React.FC
 }
 
 export const SearchBar: React.FC<Props> = props => {
@@ -43,8 +44,6 @@ export const SearchBar: React.FC<Props> = props => {
     inputAlgorithmTimeout,
     inputAlgorithm = DEBOUNCE,
     matchingAlgorithm,
-    onChange,
-    initialValue,
     ...any
   } = props;
 
@@ -60,8 +59,6 @@ export const SearchBar: React.FC<Props> = props => {
       inputAlgorithm={inputAlgorithms[inputAlgorithm]}
       matchingAlgorithm={matchingAlgorithms[matchingAlgorithm]}
       data={data}
-      onChange={onChange}
-      initialValue={initialValue}
       {...any}
     />
   );
