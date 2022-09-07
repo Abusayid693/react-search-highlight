@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { SET_INPUT, __DEV__ } from '../../const';
 import { useReactSearchHighlight } from '../../context';
-import { Stack } from '../../flexBox';
+import { Stack } from '../../elements/flexBox';
 import { useCharacterMatching, useKeyDown, useStringMatching } from '../../hooks';
 import searchIcon from '../../icons/search.svg';
 

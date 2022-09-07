@@ -14,3 +14,8 @@ export const replaceAll = (obj: any, regex: RegExp, keys: string[]) => {
   return newObj;
 };
 
+
+export const isResultsNotFound = (searchData: any[], searchInput: string) =>{
+
+  return searchData.length === 0 && searchInput.length > 0
+}

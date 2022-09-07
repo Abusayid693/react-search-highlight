@@ -34,7 +34,7 @@ export interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   value?: string;
   onChange?: (e:React.ChangeEvent<HTMLInputElement>) => void
   initialValue?: string
-  PrefixIcon: React.FC
+  PrefixIcon?: React.FC
 }
 
 export const SearchBar: React.FC<Props> = props => {

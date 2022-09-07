@@ -1,12 +1,16 @@
 import { Meta, Story } from '@storybook/react';
 import React from 'react';
-import TEST_DATA from "../data.json";
+import TEST_DATA from '../data.json';
 import {
-    PopOverList,
-    PopOverOption,
-    PopOverOptionText,
-    Props, ReactSearchHighlightProvider, SearchBar,
-    useReactSearchHighlight, Wrapper
+  PopOverList,
+  PopOverOption,
+  PopOverOptionText,
+  Props,
+  ReactSearchHighlightProvider,
+  SearchBar,
+  STRING_MATCHING,
+  useReactSearchHighlight,
+  Wrapper
 } from '../src';
 
 const meta: Meta = {
@@ -24,21 +28,21 @@ const meta: Meta = {
   }
 };
 
-
-
 export default meta;
 
 const Template = args => {
-  const {state} = useReactSearchHighlight();
+  const {suggestions, isResultsEmpty} = useReactSearchHighlight();
+
   return (
     <Wrapper>
       <SearchBar
         data={TEST_DATA}
         keysToSearch={['heading', 'title']}
         placeholder="search docs"
+        matchingAlgorithm={STRING_MATCHING}
       />
       <PopOverList>
-        {state.searchData?.map((item, index) => (
+        {suggestions?.map((item, index) => (
           <PopOverOption
             optionIndex={index}
             key={index}
@@ -49,6 +53,7 @@ const Template = args => {
             <PopOverOptionText as="h5" value={item.title} />
           </PopOverOption>
         ))}
+        {isResultsEmpty && <h3>No results found</h3>}
       </PopOverList>
     </Wrapper>
   );

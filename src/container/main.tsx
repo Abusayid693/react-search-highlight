@@ -4,8 +4,8 @@ import {
   ReactSearchHighlightProvider,
   useReactSearchHighlight
 } from '../context';
+import Text from '../elements/Text';
 import { useDidMountEffect, useKeyDown, useOffScreen } from '../hooks';
-import Text from '../Text';
 import { ContextType } from '../types';
 
 /**
@@ -42,7 +42,10 @@ const WrapperInner = ({children, isFunction}: WrapperProps) => {
   const [state, setState] = useState(InternalContextInitialState);
   const __state = useReactSearchHighlight();
 
-  const updateInternalContext = (key: keyof InternalContextInitialStateType, value: any) => {
+  const updateInternalContext = (
+    key: keyof InternalContextInitialStateType,
+    value: any
+  ) => {
     setState(prev => ({...prev, [key]: value}));
   };
 

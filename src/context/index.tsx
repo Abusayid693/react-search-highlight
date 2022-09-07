@@ -9,10 +9,11 @@ import React, {
 import { END_LOADING, RESET_STATE, START_LOADING } from '../const';
 import reducer from '../reducers';
 import { Action, ContextType, State } from '../types';
+import { isResultsNotFound } from "../utils";
 
 export const initialState: State = {
   isLoading: false,
-  searchData: undefined,
+  searchData: [],
   input: '',
 };
 
@@ -45,13 +46,18 @@ export const ReactSearchHighlightProvider: React.FC<{children: ReactNode}> = ({
     dispatch({type: RESET_STATE});
   }
 
+  const isResultsEmpty = isResultsNotFound(state.searchData, state.input);
+
   const value: ContextType = useMemo(
     () => ({
-      state,
+      suggestions: state.searchData,
+      isLoading: state.isLoading,
+      input : state.input,
       dispatch,
       startLoading,
       endLoading,
-      resetState
+      resetState,
+      isResultsEmpty
     }),
     [state]
   );
