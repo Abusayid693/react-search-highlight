@@ -1,22 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { SET_INPUT, __DEV__ } from '../../const';
 import { useReactSearchHighlight } from '../../context';
-import { Stack } from '../../flexBox';
+import { Stack } from '../../elements/flexBox';
 import { useCharacterMatching, useKeyDown, useStringMatching } from '../../hooks';
 import searchIcon from '../../icons/search.svg';
 
 import { InternalContext } from '../main';
 
-const Input: React.FC<{
+import { Props } from './index';
+
+interface InputProps extends Omit<Props, 'matchingAlgorithm'> {
+  matchingAlgorithm: typeof useCharacterMatching | typeof useStringMatching;
+  inputAlgorithm: any;
   keysToSearch: any[];
   duration: number;
-  inputAlgorithm: any;
-  matchingAlgorithm: typeof useCharacterMatching | typeof useStringMatching;
-  data: any[];
-  value?: string;
-  initialValue?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}> = ({
+}
+
+const Input = ({
   keysToSearch,
   inputAlgorithm,
   matchingAlgorithm,
@@ -24,8 +24,9 @@ const Input: React.FC<{
   value: controlledValue,
   onChange,
   initialValue,
+  PrefixIcon,
   ...any
-}) => {
+}: InputProps) => {
   const [input, setInput] = useState(initialValue ?? '');
   const {dispatch} = useReactSearchHighlight();
   const __internalContext = React.useContext(InternalContext);
@@ -62,7 +63,7 @@ const Input: React.FC<{
 
   useKeyDown(focusInput, true);
 
-  const handleOnChange = (e: any) => setInput(e.target.value);
+  const handleOnChange = (e: any) => setInput(e.target.value.toLowerCase());
   return (
     <Stack
       as="HStack"
@@ -74,7 +75,7 @@ const Input: React.FC<{
       cursor={'text'}
     >
       <figure className="rsh-input-box-logo">
-        <img src={searchIcon} width="18px" />
+        {PrefixIcon ? <PrefixIcon /> : <img src={searchIcon} width="18px" />}
       </figure>
       <input
         value={controlledValue ?? input}

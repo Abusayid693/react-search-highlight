@@ -13,15 +13,4 @@ export const CHARACTER_MATCHING = 'CHARACTER_MATCHING';
 export const DEFAULT = 'DEFAULT'
 export const POPOVER_EXPANDED = 'POPOVER_EXPANDED'
 
-export const TEST_DATA =  [
-    {
-      heading: 'Rhan is good',
-      title: 'I am eeatomg food'
-    },
-    {
-      heading: 'AI is th futur',
-      title: 'I lov ai and machin'
-    }
-  ];
-
 export const __DEV__: boolean = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';

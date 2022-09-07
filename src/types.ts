@@ -13,13 +13,17 @@ export type Action = {
 
 export interface State {
   isLoading: boolean;
-  searchData: any[] | undefined;
+  searchData: any[];
   input: string;
 }
 
 export type ContextType = {
-  state: State;
+  suggestions: any[];
+  isLoading: boolean;
+  input: string;
   dispatch: Dispatch<Action> | undefined;
   startLoading: VoidFunction;
   endLoading: VoidFunction;
+  isResultsEmpty: boolean
+  resetState: VoidFunction
 };

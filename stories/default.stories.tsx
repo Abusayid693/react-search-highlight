@@ -31,7 +31,7 @@ export default meta;
 export const Default = args => {
   return (
     <Wrapper>
-      {({state}) => {
+      {({suggestions}) => {
         return (
           <>
             <SearchBar
@@ -40,7 +40,7 @@ export const Default = args => {
               placeholder="search docs"
             />
             <PopOverList>
-              {state.searchData?.map((item, index) => (
+              {suggestions?.map((item, index) => (
                 <PopOverOption
                   optionIndex={index}
                   key={index}
