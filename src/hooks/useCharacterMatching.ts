@@ -52,7 +52,6 @@ export const useCharacterMatching = (keys: string[]) => {
           ...newItem
         };
       });
-
     dispatch?.({type: SEARCH_DATA, payload: newArr});
   };
 };

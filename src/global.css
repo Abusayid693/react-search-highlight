@@ -65,3 +65,7 @@
 .rsh-search-list-item-text{
   margin: 0px;
 }
+
+[data-heightlighted-value=true]{
+  background-color: yellow;
+}

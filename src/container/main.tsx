@@ -1,5 +1,9 @@
-import React, { createContext, ReactNode, useRef, useState } from 'react';
-import { __DEV__ } from '../const';
+import React, {
+  createContext,
+  ReactNode, useRef,
+  useState
+} from 'react';
+import { CHARACTER_MATCHING, STRING_MATCHING, __DEV__ } from '../const';
 import {
   ReactSearchHighlightProvider,
   useReactSearchHighlight
@@ -18,8 +22,15 @@ interface InternalContextInitialStateType {
   listItemActiveIndex: number;
   updateInternalContext: any;
 
-  // need for popover list active index keydown
+  /**
+   * Need for popover list active index keydown
+   */
   dataLength: number;
+
+  /**
+   * Need while rendering highlighted words
+   */
+  matchingAlgorithm?: typeof CHARACTER_MATCHING | typeof STRING_MATCHING;
 }
 
 const InternalContextInitialState: InternalContextInitialStateType = {
@@ -181,11 +192,18 @@ export interface PopOverOptionTextProps
 export const PopOverOptionText: React.FC<PopOverOptionTextProps> = ({
   className,
   value,
-  as,
+  as = 'h3',
   ...any
 }) => {
-  const words = value?.split(/\(([^)]+)\)/);
-  as = as ?? 'h3';
+  const {input} = useReactSearchHighlight();
+  const {matchingAlgorithm} = React.useContext(InternalContext);
+  const words = value?.split(/<mark>/);
+
+  const isHighlighted = (word: string) => {
+    return matchingAlgorithm === STRING_MATCHING
+      ? word.toLocaleLowerCase() === input
+      : input.includes(word.toLocaleLowerCase());
+  };
   return (
     <Text
       as={as}
@@ -193,10 +211,17 @@ export const PopOverOptionText: React.FC<PopOverOptionTextProps> = ({
       {...any}
     >
       {words?.map((word, index) =>
-        word[0] === '<' ? (
-          <span key={index} dangerouslySetInnerHTML={{__html: word}} />
+        isHighlighted(word) ? (
+          <span
+            key={`${word}-${index}`}
+            data-user-value={true}
+            data-suggested-value={true}
+            data-heightlighted-value={true}
+          >
+            {word}
+          </span>
         ) : (
-          <span key={index}>{word}</span>
+          <span key={`${word}-${index}`}>{word}</span>
         )
       )}
     </Text>

@@ -8,14 +8,16 @@ export const replaceAll = (obj: any, regex: RegExp, keys: string[]) => {
     key =>
       (newObj[key] = obj[key].replaceAll(
         regex,
-        (match: any) => `(<mark>${match}</mark>)`
+        (match: any) => `<mark>${match}<mark>`
       ))
   );
   return newObj;
 };
 
+export const replaceAllSingle = (value: any, regex: RegExp) => {
+  return value.replaceAll(regex, (match: any) => `<mark>${match}<mark>`);
+};
 
-export const isResultsNotFound = (searchData: any[], searchInput: string) =>{
-
-  return searchData.length === 0 && searchInput.length > 0
-}
+export const isResultsNotFound = (searchData: any[], searchInput: string) => {
+  return searchData.length === 0 && searchInput.length > 0;
+};
