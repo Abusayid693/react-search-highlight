@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   CHARACTER_MATCHING,
   DEBOUNCE,
@@ -12,6 +12,7 @@ import {
   useDebounce, useStringMatching,
   useThrottle
 } from '../../hooks';
+import { InternalContext } from '../main';
 import Input from './input';
 
 const inputAlgorithms: Record<string, any> = {
@@ -41,16 +42,19 @@ export const SearchBar: React.FC<Props> = props => {
   let {
     data,
     keysToSearch,
-    inputAlgorithmTimeout,
+    inputAlgorithmTimeout = 500,
     inputAlgorithm = DEBOUNCE,
-    matchingAlgorithm,
+    matchingAlgorithm = CHARACTER_MATCHING,
     ...any
   } = props;
 
   keysToSearch = keysToSearch ?? Object.keys(data?.[0]);
-  inputAlgorithm = inputAlgorithm ?? DEBOUNCE;
-  inputAlgorithmTimeout = inputAlgorithmTimeout ?? 500;
-  matchingAlgorithm = matchingAlgorithm ?? CHARACTER_MATCHING;
+  const __internalContext = React.useContext(InternalContext);
+
+  useEffect(() => {
+    if (__internalContext)
+      __internalContext.updateInternalContext('matchingAlgorithm', matchingAlgorithm);
+  }, []);
 
   return (
     <Input

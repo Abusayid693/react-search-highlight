@@ -39,7 +39,6 @@ export const useStringMatching = (keys: string[]) => {
       }
       return;
     }
-
     const newArr = data
       ?.filter((single: any) => isMatch(single, input, keys))
       .map((item: any) => {
@@ -49,7 +48,7 @@ export const useStringMatching = (keys: string[]) => {
           ...newItem
         };
       });
-
+      
     dispatch?.({type: SEARCH_DATA, payload: newArr});
   };
 };
