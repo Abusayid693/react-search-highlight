@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+
 import {
   CHARACTER_MATCHING,
   DEBOUNCE, DEFAULT, SET_INPUT, STRING_MATCHING, THROTTLE, __DEV__
@@ -38,6 +39,7 @@ export interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   PrefixIcon?: React.FC
 }
 
+
 export const SearchBar = React.forwardRef(({
   keysToSearch,
   inputAlgorithm = DEBOUNCE,
@@ -55,6 +57,7 @@ export const SearchBar = React.forwardRef(({
   const __internalContext = React.useContext(InternalContext);
 
   keysToSearch = keysToSearch ?? Object.keys(data?.[0]);
+
 
   const inputRef = useRef<HTMLInputElement>(null);
   const composedRefs = useRefComposition([inputRef, forwardedRef])
