@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/react';
-import React from 'react';
+import React, { useRef } from 'react';
 import TEST_DATA from '../data.json';
 import {
   PopOverList,
@@ -32,6 +32,9 @@ export default meta;
 
 const Template = args => {
   const {suggestions, isResultsEmpty} = useReactSearchHighlight();
+  const ref = useRef();
+
+  console.log('ref :', ref);
 
   return (
     <Wrapper>
@@ -40,6 +43,7 @@ const Template = args => {
         keysToSearch={['heading', 'title']}
         placeholder="search docs"
         matchingAlgorithm={STRING_MATCHING}
+        ref={ref}
       />
       <PopOverList>
         {suggestions?.map((item, index) => (
