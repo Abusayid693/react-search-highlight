@@ -106,15 +106,15 @@ export interface PopOverListProps
 
 export const PopOverList: React.FC<PopOverListProps> = ({children, ...any}) => {
   const listRef = useRef<HTMLUListElement>(null);
+  const {suggestions} = useReactSearchHighlight()
   const {
     isPopoverExpanded,
     listItemActiveIndex,
     updateInternalContext,
-    dataLength
   } = React.useContext(InternalContext);
 
   const listItemActiveIndexArrowDown = () => {
-    if (listItemActiveIndex < dataLength - 1)
+    if (listItemActiveIndex < suggestions.length - 1)
       updateInternalContext('listItemActiveIndex', listItemActiveIndex + 1);
   };
 
@@ -125,7 +125,7 @@ export const PopOverList: React.FC<PopOverListProps> = ({children, ...any}) => {
 
   useKeyDown(listItemActiveIndexArrowDown, false, 'arrowdown', [
     listItemActiveIndex,
-    dataLength
+    suggestions.length
   ]);
   useKeyDown(listItemActiveIndexArrowUp, false, 'arrowup', [
     listItemActiveIndex
