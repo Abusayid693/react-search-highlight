@@ -1,15 +1,16 @@
-import React, {
-  createContext,
-  ReactNode, useRef,
-  useState
-} from 'react';
+import React, { createContext, ReactNode, useRef, useState } from 'react';
 import { CHARACTER_MATCHING, STRING_MATCHING, __DEV__ } from '../const';
 import {
   ReactSearchHighlightProvider,
   useReactSearchHighlight
 } from '../context';
 import Text from '../elements/Text';
-import { useDidMountEffect, useKeyDown, useOffScreen } from '../hooks';
+import {
+  useDidMountEffect,
+  useKeyDown,
+  useOffScreen,
+  useRefComposition
+} from '../hooks';
 import { ContextType } from '../types';
 
 /**
@@ -49,98 +50,117 @@ interface WrapperProps {
   isFunction: boolean;
 }
 
-const WrapperInner = ({children, isFunction}: WrapperProps) => {
-  const [state, setState] = useState(InternalContextInitialState);
-  const __state = useReactSearchHighlight();
+const WrapperInner = React.forwardRef<HTMLDivElement, WrapperProps>(
+  ({children, isFunction}, forwardedRef) => {
+    const [state, setState] = useState(InternalContextInitialState);
+    const __state = useReactSearchHighlight();
 
-  const updateInternalContext = (
-    key: keyof InternalContextInitialStateType,
-    value: any
-  ) => {
-    setState(prev => ({...prev, [key]: value}));
-  };
+    const updateInternalContext = (
+      key: keyof InternalContextInitialStateType,
+      value: any
+    ) => {
+      setState(prev => ({...prev, [key]: value}));
+    };
 
-  const listRef = useRef<HTMLElement>(null);
-  const [isListVisible, setIsListVisible] = useOffScreen(listRef);
+    const listRef = useRef<HTMLElement>(null);
+    const composedRefs = useRefComposition([listRef, forwardedRef]);
+    const [isListVisible, setIsListVisible] = useOffScreen(listRef);
 
-  useDidMountEffect(() => {
-    updateInternalContext('isPopoverExpanded', isListVisible);
-  }, [isListVisible]);
+    useDidMountEffect(() => {
+      updateInternalContext('isPopoverExpanded', isListVisible);
+    }, [isListVisible]);
 
-  return (
-    <InternalContext.Provider value={{...state, updateInternalContext}}>
-      <section
-        ref={listRef}
-        className="rsh-search-wrapper"
-        /**
-         * onFocusCapture is triggered when input(child) is focused
-         */
-        onFocusCapture={() => setIsListVisible(true)}
-      >
-        {isFunction ? children(__state) : children}
-      </section>
-    </InternalContext.Provider>
-  );
-};
+    return (
+      <InternalContext.Provider value={{...state, updateInternalContext}}>
+        <section
+          ref={composedRefs}
+          className="rsh-search-wrapper"
+          /**
+           * onFocusCapture is triggered when input(child) is focused
+           */
+          onFocusCapture={() => setIsListVisible(true)}
+        >
+          {isFunction ? children(__state) : children}
+        </section>
+      </InternalContext.Provider>
+    );
+  }
+);
 
-export const Wrapper = ({children}: Pick<WrapperProps, 'children'>) => {
+export const Wrapper = React.forwardRef<
+  HTMLDivElement,
+  Pick<WrapperProps, 'children'>
+>(({children}: Pick<WrapperProps, 'children'>, forwardedRef) => {
   const isFunction = typeof children === 'function';
-
   return (
     <>
       {isFunction ? (
         <ReactSearchHighlightProvider>
-          <WrapperInner isFunction={isFunction} children={children} />
+          <WrapperInner
+            ref={forwardedRef}
+            isFunction={isFunction}
+            children={children}
+          />
         </ReactSearchHighlightProvider>
       ) : (
-        <WrapperInner isFunction={isFunction} children={children} />
+        <WrapperInner
+          ref={forwardedRef}
+          isFunction={isFunction}
+          children={children}
+        />
       )}
     </>
   );
-};
+});
 
 export interface PopOverListProps
   extends React.OlHTMLAttributes<HTMLUListElement> {
   children: ReactNode;
 }
 
-export const PopOverList: React.FC<PopOverListProps> = ({children, ...any}) => {
-  const listRef = useRef<HTMLUListElement>(null);
-  const {suggestions} = useReactSearchHighlight()
-  const {
-    isPopoverExpanded,
-    listItemActiveIndex,
-    updateInternalContext,
-  } = React.useContext(InternalContext);
+export const PopOverList = React.forwardRef<HTMLUListElement, PopOverListProps>(
+  ({children, ...any}, forwardedRef) => {
+    const {suggestions} = useReactSearchHighlight();
+    const {
+      isPopoverExpanded,
+      listItemActiveIndex,
+      updateInternalContext
+    } = React.useContext(InternalContext);
 
-  const listItemActiveIndexArrowDown = () => {
-    if (listItemActiveIndex < suggestions.length - 1)
-      updateInternalContext('listItemActiveIndex', listItemActiveIndex + 1);
-  };
+    const listItemActiveIndexArrowDown = () => {
+      if (listItemActiveIndex < suggestions.length - 1)
+        updateInternalContext('listItemActiveIndex', listItemActiveIndex + 1);
+    };
 
-  const listItemActiveIndexArrowUp = () => {
-    if (listItemActiveIndex > 0)
-      updateInternalContext('listItemActiveIndex', listItemActiveIndex - 1);
-  };
+    const listItemActiveIndexArrowUp = () => {
+      if (listItemActiveIndex > 0)
+        updateInternalContext('listItemActiveIndex', listItemActiveIndex - 1);
+    };
 
-  useKeyDown(listItemActiveIndexArrowDown, false, 'arrowdown', [
-    listItemActiveIndex,
-    suggestions.length
-  ]);
-  useKeyDown(listItemActiveIndexArrowUp, false, 'arrowup', [
-    listItemActiveIndex
-  ]);
+    useKeyDown(listItemActiveIndexArrowDown, false, 'arrowdown', [
+      listItemActiveIndex,
+      suggestions.length
+    ]);
+    useKeyDown(listItemActiveIndexArrowUp, false, 'arrowup', [
+      listItemActiveIndex
+    ]);
 
-  return (
-    <>
-      {isPopoverExpanded && (
-        <ul ref={listRef} className="rsh-search-list" {...any}>
-          {children}
-        </ul>
-      )}
-    </>
-  );
-};
+    return (
+      <>
+        {isPopoverExpanded && (
+          <ul
+            data-popover-expanded={isPopoverExpanded}
+            ref={forwardedRef}
+            className="rsh-search-list"
+            {...any}
+          >
+            {children}
+          </ul>
+        )}
+      </>
+    );
+  }
+);
 
 export interface PopOverOptionProps
   extends React.LiHTMLAttributes<HTMLLIElement> {

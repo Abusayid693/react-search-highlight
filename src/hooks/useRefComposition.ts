@@ -1,9 +1,9 @@
 import React, { Ref } from 'react';
 
 /**
- * useRefComposition combines multiple refs into a single compose ref
+ * useRefComposition combines multiple refs into a single composed ref
  * @param refs - Array of refs
- * @returns - callback function to update ref
+ * @returns callback function to update ref
  */
 export const useRefComposition = <T>(
   refs: Ref<T>[]
