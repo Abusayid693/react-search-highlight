@@ -149,7 +149,30 @@ export const WithModal = () => {
 };
 ```
 
-🔨 API
+#### Data must be provided as array of object format in `<SearchBar/>` component `data` prop, additionally `keysToSearch` prop must be a array of keys to search form data object.
+
+```tsx
+const data = [
+  {
+    title:....,
+    name:.....,
+    age:......,
+  },
+  ....
+]
+// It is not necessary to pass all the keys from the object, only keys that are passed
+// will be searched
+const keysToSearch = ['title','name']
+
+
+<SearchBar
+  data={data} 
+  keysToSearch={keysToSearch}
+ />
+
+```
+
+## 🔨 API
 `useReactSearchHighlight` can be used with `ReactSearchHighlightProvider` and it can be used throughout the component to access the context values. Note that whenever you are using it you must wrap the entire component using `ReactSearchHighlightProvider`.
 
 ```tsx static
@@ -229,6 +252,7 @@ You can also access these values using wrapper component
   // Determine type of html element ex: p, h1, h2
   as: string;
 ```
+
 
 ### 🐛 Bug Reporting
 `The Library is in developing stage`
