@@ -34,8 +34,6 @@ const Template = args => {
   const {suggestions, isResultsEmpty} = useReactSearchHighlight();
   const ref = useRef();
 
-  console.log('ref :', ref);
-
   return (
     <Wrapper>
       <SearchBar

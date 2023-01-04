@@ -7,7 +7,7 @@ import {
 import { useReactSearchHighlight } from '../../context';
 import { Stack } from '../../elements/flexBox';
 import { useKeyDown, useRefComposition } from '../../hooks';
-import searchIcon from '../../icons/search.svg';
+import SearchIcon from '../../icons/search';
 import { InternalContext } from '../main';
 
 import {
@@ -28,27 +28,65 @@ export const matchingAlgorithms: Record<string, any> = {
 };
 
 export interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+  // Data to perform search operation
   data: any[];
+
+  // Determines which keys to search from the data object
   keysToSearch?: string[];
+
+  // Determines input box behaviour it accepts three values DEBOUNCE, THROTTLE or DEFAULT
   inputAlgorithm?: typeof DEBOUNCE | typeof THROTTLE | typeof DEFAULT;
+
+  // Optional: Determines the input algorithm timeout for debounce and throttle
   inputAlgorithmTimeout?: number;
+
+  // Determines matching algorithm to search over data, it accepts two values CHARACTER_MATCHING or STRING_MATCHING
+  // CHARACTER_MATCHING matches each character from the data to highlight it
+  // STRING_MATCHING matches each word from the data to highlight it
   matchingAlgorithm?: typeof CHARACTER_MATCHING | typeof STRING_MATCHING;
+
+  // Optional: input value, it is recommended not to pass any in general case
   value?: string;
+
+  // Optional: input value onChange event handler
   onChange?: (e:React.ChangeEvent<HTMLInputElement>) => void
+
+  // Optional: Determines initial input value
   initialValue?: string
+
+  // Optional: It can be used to change search bar icon
   PrefixIcon?: React.FC
 }
 
 
 export const SearchBar = React.forwardRef(({
+  // Determines which keys to search from the data object
   keysToSearch,
+
+  // Determines input box behaviour it accepts three values DEBOUNCE, THROTTLE or DEFAULT
   inputAlgorithm = DEBOUNCE,
+
+  // Determines matching algorithm to search over data, it accepts two values CHARACTER_MATCHING or STRING_MATCHING
+  // CHARACTER_MATCHING matches each character from the data to highlight it
+  // STRING_MATCHING matches each word from the data to highlight it
   matchingAlgorithm = CHARACTER_MATCHING,
+
+  // Data to perform search operation
   data,
+
+  // Optional: input value, it is recommended not to pass any in general case
   value: controlledValue,
+
+  // Optional: Determines the input algorithm timeout for debounce and throttle
   inputAlgorithmTimeout = 500,
+
+  // Optional: onChange event handler
   onChange,
+
+  // Optional: Determines initial input value
   initialValue,
+
+  // Optional: It can be used to change search bar icon
   PrefixIcon,
   ...any
 }: Props, forwardedRef) => {
@@ -104,7 +142,7 @@ export const SearchBar = React.forwardRef(({
       cursor={'text'}
     >
       <figure className="rsh-input-box-logo">
-        {PrefixIcon ? <PrefixIcon /> : <img src={searchIcon} width="18px" />}
+        {PrefixIcon ? <PrefixIcon /> : <SearchIcon />}
       </figure>
       <input
         value={controlledValue ?? input}
