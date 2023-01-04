@@ -7,7 +7,7 @@ import {
 import { useReactSearchHighlight } from '../../context';
 import { Stack } from '../../elements/flexBox';
 import { useKeyDown, useRefComposition } from '../../hooks';
-import searchIcon from '../../icons/search.svg';
+import SearchIcon from '../../icons/search';
 import { InternalContext } from '../main';
 
 import {
@@ -104,7 +104,7 @@ export const SearchBar = React.forwardRef(({
       cursor={'text'}
     >
       <figure className="rsh-input-box-logo">
-        {PrefixIcon ? <PrefixIcon /> : <img src={searchIcon} width="18px" />}
+        {PrefixIcon ? <PrefixIcon /> : <SearchIcon />}
       </figure>
       <input
         value={controlledValue ?? input}
