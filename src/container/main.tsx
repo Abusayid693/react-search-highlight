@@ -166,7 +166,10 @@ export const PopOverList = React.forwardRef<HTMLUListElement, PopOverListProps>(
 
 export interface PopOverOptionProps
   extends React.LiHTMLAttributes<HTMLLIElement> {
+  // React element node
   children: ReactNode;
+  
+  // Determines the navigation index used for internal list navigation
   optionIndex: number;
 }
 
@@ -207,7 +210,11 @@ export const PopOverOption: React.FC<PopOverOptionProps> = ({
 export interface PopOverOptionTextProps
   extends React.HTMLAttributes<HTMLParagraphElement> {
   className?: string;
+  
+  // Determines text value to render with highlight
   value: string;
+
+  // Determine type of html element ex: p, h1, h2
   as: string;
 }
 
