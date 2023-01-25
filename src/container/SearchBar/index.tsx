@@ -119,7 +119,7 @@ export const SearchBar = React.forwardRef(({
   useEffect(() => {
     if (data) matchingFn(searchInput, data);
     dispatch?.({type: SET_INPUT, payload: searchInput});
-  }, [searchTerm, data]);
+  }, [searchTerm]);
 
   useEffect(() => {
     if (__internalContext)
