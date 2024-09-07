@@ -7,7 +7,6 @@ react-search-highlight is a light weight react package to highlight static/dynam
  <div>
   <img src="https://img.shields.io/npm/v/react-search-highlight">
   <img src="https://img.shields.io/npm/l/react-search-highlight">
-  <img src="https://img.shields.io/node/v-lts/react-search-highlight">
   <img src="https://img.shields.io/github/languages/top/abusayid693/react-search-highlight">
 </div>
 
